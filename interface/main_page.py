@@ -3,10 +3,10 @@ import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 
 
-class isystem02(ttk.Frame):
+class main_page(ttk.Frame):
     def __init__(self, frameprincipal):
         super().__init__(frameprincipal, style='cyborg')
-        titre_text = "System 2"
+        titre_text = "Main page"
         self.titre = ttk.Label(self, text=titre_text, style='main.TLabel')
 
     def show(self):
@@ -16,4 +16,3 @@ class isystem02(ttk.Frame):
 
     def unshow(self):
         self.pack_forget()
-        self.titre.pack_forget()
