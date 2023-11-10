@@ -13,7 +13,7 @@ class MainProgram(ttk.Frame):
 
         self.frames = {}
         
-        for F
+        
         for F in (StartPage, Page1, Page2):
 
 			frame = F(container, self)
