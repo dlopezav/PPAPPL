@@ -12,8 +12,7 @@ class MainProgram(ttk.Frame):
         NavBar(self)
 
         self.frames = {}
-        
-        
+ 
         for F in (StartPage, Page1, Page2):
 
 			frame = F(container, self)

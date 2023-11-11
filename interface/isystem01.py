@@ -8,19 +8,28 @@ from ttkbootstrap.constants import *
 class isystem01(ttk.Frame):
     def __init__(self, frameprincipal):
         super().__init__(frameprincipal, style='cyborg')
-        titre_text = "System 1"
+        titre_text = "PID fluelflow"
 
         self.titre = ttk.Label(self, text=titre_text, style='main.TLabel')
         
         self.float_vars = [tk.DoubleVar() for _ in range(7)]
-        
-        self.labels = [ttk.Label(self, text="Input 1:"),ttk.Label(self, text="Input 2:"),
-                       ttk.Label(self, text="Input 3:"),ttk.Label(self, text="Input 4:"),
-                       ttk.Label(self, text="Input 5:"),ttk.Label(self, text="Input 6:"),]
 
-        self.entrys = [ttk.Entry(self, textvariable=self.float_vars[0]),ttk.Entry(self, textvariable=self.float_vars[1]),
-                       ttk.Entry(self, textvariable=self.float_vars[2]),ttk.Entry(self, textvariable=self.float_vars[3]),
-                       ttk.Entry(self, textvariable=self.float_vars[4]),ttk.Entry(self, textvariable=self.float_vars[5])]
+        self.frames = []
+
+        self.labels = []
+
+        self.entrys = []
+
+        self.texts = ["Input 1:","Input 2:","Input 3:","Input 4:",
+                      "Input 5:","Input 6:"]
+        
+        for count,text in enumerate(self.texts):
+
+            self.frames.append(ttk.Frame(self))
+
+            self.labels.append(ttk.Label(self.frames[count], text= text))
+
+            self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count])) 
 
             
 
@@ -31,9 +40,10 @@ class isystem01(ttk.Frame):
         self.update_idletasks() 
         
         for i in range(len(self.labels)):
-            self.labels[i].pack(side=TOP, padx=5, pady=5)             
-            self.entrys[i].pack(side=TOP, padx=5, pady=5)
-
+                self.frames[i].pack()
+                self.labels[i].pack(side=LEFT, padx=5, pady=5)
+                self.entrys[i].pack(side=RIGHT, padx=5, pady=5)
+            
             
         
 
