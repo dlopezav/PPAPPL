@@ -38,6 +38,7 @@ class isystem02(ttk.Frame):
         self.wageningen_label = ttk.Label(self.wageningen_frame, text="Wageningen coefficients imports:")
         self.wageningen_file_entry = ttk.Entry(self.wageningen_frame, state='readonly')
         self.browse_button = ttk.Button(self.wageningen_frame, text="Browse", command=self.browse_wageningen_file)
+        
 
     def show(self):
         self.pack(fill=BOTH, expand=YES)
@@ -65,14 +66,19 @@ class isystem02(ttk.Frame):
         self.pack_forget()
 
     def browse_wageningen_file(self):
-        file_path = filedialog.askopenfilename(filetypes=[("Excel files", "*.xlsx;*.xls")])
+
+        self.file_path = filedialog.askopenfilename(filetypes=[("Excel files", "*.xlsx;*.xls")])
         self.wageningen_file_entry.config(state='normal')
         self.wageningen_file_entry.delete(0, tk.END)
-        self.wageningen_file_entry.insert(0, file_path)
+        self.wageningen_file_entry.insert(0, self.file_path)
         self.wageningen_file_entry.config(state='readonly')
-        # Aqui você pode adicionar a lógica para lidar com o arquivo Excel carregado
-        # Exemplo: leitura dos coeficientes do arquivo e atualização das variáveis de controle
-        df = pd.read_excel(file_path)
+
+        
+
+  
+    def return_values(self):
+
+        df = pd.read_excel(self.file_path)
         n1_nump = df['n1'].to_numpy()
         ct_nump = df['ct'].to_numpy()
         s1_nump = df['s'].to_numpy()
@@ -86,6 +92,6 @@ class isystem02(ttk.Frame):
         t2_nump = df['t2'].to_numpy()
         u2_nump = df['u2'].to_numpy()
         v2_nump = df['v2'].to_numpy()
-        
-        print(f"Arquivo Excel selecionado: {file_path}")
 
+        return n1_nump, ct_nump, s1_nump, t1_nump, u1_nump, v1_nump, n2_nump, cq_nump, s2_nump, t2_nump, u2_nump, v2_nump, \
+               [var.get() for var in self.float_vars]

@@ -25,6 +25,10 @@ class MainProgram(ttk.Frame):
         self.actual_page = page
         frame = self.pages[self.actual_page]
         frame.show()
+    
+    def show_values(self):
+        t = self.pages[2].return_values()
+        print(t)
 
 
 
@@ -54,6 +58,9 @@ class NavBar(ttk.Frame):
 
         
         system05 = ttk.Button(self, style='info.Solid.TButton', text='Engine MVEM',width=15, command = lambda : frameprincipal.show_pages(5))
+        system05.pack(side=TOP)
+
+        system05 = ttk.Button(self, style='info.Solid.TButton', text='RUN',width=15, command = lambda : frameprincipal.show_values())
         system05.pack(side=TOP)
         
 
