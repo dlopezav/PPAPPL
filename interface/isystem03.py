@@ -6,7 +6,7 @@ from ttkbootstrap.constants import *
 class isystem03(ttk.Frame):
     def __init__(self, frameprincipal):
         super().__init__(frameprincipal, style='cyborg')
-        titre_text = "Powermanegement"
+        titre_text = "Powermanagement"
         self.titre = ttk.Label(self, text=titre_text, style='main.TLabel')
         
         self.float_vars = [tk.DoubleVar() for _ in range(7)]
