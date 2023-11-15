@@ -1,40 +1,52 @@
 import tkinter as tk
 from tkinter import ttk, filedialog
 from ttkbootstrap.constants import *
+from ttkbootstrap.scrolled import ScrolledFrame
 import pandas as pd
-
 
 class isystem02(ttk.Frame):
     def __init__(self, frameprincipal):
         super().__init__(frameprincipal, style='cyborg')
         titre_text = "PID Propeller"
+
         self.titre = ttk.Label(self, text=titre_text, style='main.TLabel')
 
+        self.scrollframe = ScrolledFrame(self)
+
         self.frames = []
+
+        self.Labelframes = [ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Constants"),
+                            ttk.LabelFrame(self.scrollframe, bootstyle='info',text="To be determined")]
 
         self.labels = []
 
         self.entrys = []
 
-        self.texts = ["ship displacement volume [m3]:", "density of sea water [kg/m^3]:", "mass of ship [kg]:",
-                      "add virtual mass [kg]:", "diameter [m]:", "thrust:", "dVs_dt = c_1 * V_s^2 [kg/m]:",
-                      "# the number of propeller blades, zp:", "the disk area coefficient, AE/Ao:",
-                      "the pitch to diameter ratio, p/Dp:", "ship wake fraction, w, which is considered constant "
-                      "taking values in the range from 0.20:"]
+        self.texts = ["Ship displacement volume [m3]:", "Density of sea water [kg/m^3]:", "Mass of ship [kg]:",
+                      "Add virtual mass [kg]:", "Diameter [m]:", "Thrust:", "dVs_dt = c_1 * V_s^2 [kg/m]:",
+                      "Number of propeller blades, zp:", "Disk area coefficient, AE/Ao:",
+                      "Pitch to diameter ratio, p/Dp:", "Ship wake fraction, w, which is considered constant "
+                      "Taking values in the range from 0.20:"]
         
         self.float_vars = [tk.DoubleVar() for _ in self.texts]
 
         for count, text in enumerate(self.texts):
-            self.frames.append(ttk.Frame(self))
-            self.labels.append(ttk.Label(self.frames[count], text=text))
-            self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+            if count < 2:
+                # For the ones outside in the first labelframe
+                self.frames.append(ttk.Frame(self.Labelframes[0]))
+                self.labels.append(ttk.Label(self.frames[count], text=text))
+                self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+            else:
+                self.frames.append(ttk.Frame(self.Labelframes[1]))
+                self.labels.append(ttk.Label(self.frames[count], text=text))
+                self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
 
-        # Adiciona um traço divisor
+        # Separator
         self.divider1 = ttk.Separator(self, orient='horizontal')
         self.divider2 = ttk.Separator(self, orient='horizontal')
 
-        # Campo de arquivo para os coeficientes de Wageningen
-        self.wageningen_frame = ttk.Frame(self)
+        # Wageningen
+        self.wageningen_frame = ttk.Frame(self.scrollframe)
         self.wageningen_label = ttk.Label(self.wageningen_frame, text="Wageningen coefficients imports:")
         self.wageningen_file_entry = ttk.Entry(self.wageningen_frame, state='readonly')
         self.browse_button = ttk.Button(self.wageningen_frame, text="Browse", command=self.browse_wageningen_file)
@@ -43,14 +55,16 @@ class isystem02(ttk.Frame):
     def show(self):
         self.pack(fill=BOTH, expand=YES)
         self.titre.pack(fill=X, pady=10, padx=20)
+        self.scrollframe.pack(fill=BOTH, expand=YES)
+        self.Labelframes[0].pack(fill=BOTH, pady=10, padx=20)
+        self.Labelframes[1].pack(fill=BOTH, pady=10, padx=20)
         self.update_idletasks()
 
         for i in range(len(self.labels)):
             self.frames[i].pack(side=TOP, anchor='w')
             self.labels[i].pack(side=LEFT, padx=5, pady=5)
             self.entrys[i].pack(side=LEFT, padx=5, pady=5)
-            if i==1:
-                self.divider1.pack(fill=X, pady=5)
+                
 
 
         # Adiciona o traço divisor
@@ -61,6 +75,8 @@ class isystem02(ttk.Frame):
         self.wageningen_label.pack(side=TOP, padx=5)
         self.browse_button.pack(side=LEFT, padx=5)
         self.wageningen_file_entry.pack(side=LEFT, padx=5)
+
+        
 
     def unshow(self):
         self.pack_forget()

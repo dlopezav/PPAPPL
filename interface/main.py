@@ -16,6 +16,8 @@ class MainProgram(ttk.Frame):
         super().__init__(master_window)
         self.pack(fill=BOTH, expand=YES)
         NavBar(self)
+        DowBar(self)
+        
         self.pages = [main_page(self),isystem01(self),isystem02(self),isystem03(self),isystem04(self),isystem05(self)]
         self.actual_page = 0
         self.show_pages(0)
@@ -30,6 +32,19 @@ class MainProgram(ttk.Frame):
         t = self.pages[2].return_values()
         print(t)
 
+
+class DowBar(ttk.Frame):
+    def __init__(self,frameprincipal):
+        super().__init__(frameprincipal,style='secondary')
+        self.pack(side=BOTTOM,fill=X)
+        frame = ttk.Frame(self,style='secondary')
+        frame.pack()
+        sauvegarde = ttk.Button(frame, style='success.Solid.TButton', text='sauvegarder',width=30)
+        sauvegarde.pack(side=LEFT,padx=10,pady=[10,10])
+        recuperer = ttk.Button(frame, style='danger.Solid.TButton', text='recuperer',width=30)
+        recuperer.pack(side=LEFT,padx=10,pady=[10,10])
+        executer = ttk.Button(frame, style='primary.Solid.TButton', text='executer',width=30, command = lambda : frameprincipal.show_values())
+        executer.pack(side=LEFT,padx=10,pady=[10,10])
 
 
 class NavBar(ttk.Frame):
@@ -60,8 +75,6 @@ class NavBar(ttk.Frame):
         system05 = ttk.Button(self, style='info.Solid.TButton', text='Engine MVEM',width=15, command = lambda : frameprincipal.show_pages(5))
         system05.pack(side=TOP)
 
-        system05 = ttk.Button(self, style='info.Solid.TButton', text='RUN',width=15, command = lambda : frameprincipal.show_values())
-        system05.pack(side=TOP)
         
 
 
