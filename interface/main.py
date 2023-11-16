@@ -34,17 +34,22 @@ class MainProgram(ttk.Frame):
 
 
 class DowBar(ttk.Frame):
-    def __init__(self,frameprincipal):
-        super().__init__(frameprincipal,style='secondary')
-        self.pack(side=BOTTOM,fill=X)
-        frame = ttk.Frame(self,style='secondary')
+    def __init__(self, frameprincipal):
+        super().__init__(frameprincipal, style='secondary')
+        self.pack(side=BOTTOM, fill=BOTH)
+        
+        frame = ttk.Frame(self, style='secondary')
         frame.pack()
-        sauvegarde = ttk.Button(frame, style='success.Solid.TButton', text='sauvegarder',width=30)
-        sauvegarde.pack(side=LEFT,padx=10,pady=[10,10])
-        recuperer = ttk.Button(frame, style='danger.Solid.TButton', text='recuperer',width=30)
-        recuperer.pack(side=LEFT,padx=10,pady=[10,10])
-        executer = ttk.Button(frame, style='primary.Solid.TButton', text='executer',width=30, command = lambda : frameprincipal.show_values())
-        executer.pack(side=LEFT,padx=10,pady=[10,10])
+        
+        sauvegarde = ttk.Button(frame, style='success.Solid.TButton', text='sauvegarder', width=35)
+        sauvegarde.pack(side=LEFT)
+        
+        recuperer = ttk.Button(frame, style='danger.Solid.TButton', text='recuperer', width=35)
+        recuperer.pack(side=LEFT)
+        
+        executer = ttk.Button(frame, style='primary.Solid.TButton', text='executer', width=35, command=lambda: frameprincipal.show_values())
+        executer.pack(side=LEFT)
+
 
 
 class NavBar(ttk.Frame):
@@ -87,7 +92,7 @@ if __name__ == "__main__":
 
     style = Style()
     style.configure('main.TLabel', font=('Nunito Sans', 40))
-    
+
     MainProgram(app)
 
     app.mainloop()
