@@ -29,7 +29,7 @@ class MainProgram(ttk.Frame):
         frame.show()
     
     def show_values(self):
-        t = self.pages[2].return_values()
+        t = self.pages[0].return_all_values()
         print(t)
 
 
