@@ -250,41 +250,61 @@ class Notebook_0dCycle(ttk.Frame):
 
         self.entrys = []
 
-        self.texts = ["Delta t:", 
-                      "Number of revolution per cycle:", 
-                      "Clearance volume [cm3]:",
-                      "Lower heating value :", 
-                      "wall surface [units ?]:",
-                      "Stroke:",
-                      "l: ","ar:","Perfect gas constant:",
+        self.texts = []
 
-                      "Tw [K]:","Pressure at inlet valve closing [bar]:",
-                      "Temperature at the inlet valve closing [K]:",
-                      "Initial masse in the cylinder [g]:",
-                      "Compression ratio:",
-                      "reference temperature [K]:",
-                      "Stochiometric coefficient:",
-                      "R / molar mass of exhaust", "R / mass of air","R / mass of fuel gas",
-                      
-                      "acomb:","bcomb:","am:","bm:","cm:","delta_m:",
-
-                      "a_id:","b_id:","c_id:","mWiebe:",
-
-                      "Air fuel ratio for reference point:","ignition delay for reference point",
-                      "Mass at inlet valve closing for reference point [g]:",
-                      "Engine speed for reference point [rpm]:","Wiebe curve form coefficient for reference point:",
-                      "Combustion duration for reference point:",
-                      "SMFR:","topen:","tclose"]
-        
-        self.all_values = [0.0001,1,164671,42707,1.102343986,3,468,3468,1734,8.314462,
-                           300+273.15,4.1,307,7462,15,298.15,14.8,0.1341,0.287,0.0489086,0.42,0.49,0.59,0.21,-0.96,
-                           0.27,0.39,0.105,3.12,0.1,2.435696566131349,1,7462,80,0.1,0.3667076110839844*60/(2*math.pi),
-                           14500,0.0005,0.0005]
-        
         self.float_vars = []
 
-        for i in range(len(self.all_values)):
-            self.float_vars.append(tk.DoubleVar(value=self.all_values[i]))
+        self.texts_values= ["Delta t:", 0.0001,
+                            "Number of revolution per cycle:", 1,
+                            "Clearance volume [cm3]:",164671,
+                            "Lower heating value :", 42707,
+                            "wall surface [units ?]:",1.102343986,
+                            "Stroke:", 3.468,
+                            "l: ", 3468,
+                            "ar:", 1734,
+                            "Perfect gas constant:",8.314462,
+
+                            "Tw [K]:",300+273.15,
+                            "Pressure at inlet valve closing [bar]:", 4.1,
+                            "Temperature at the inlet valve closing [K]:", 307,
+                            "Initial masse in the cylinder [g]:",7462,
+                            "Compression ratio:", 15,
+                            "reference temperature [K]:", 298.15,
+                            "Stochiometric coefficient:", 14.8,
+                            "R / molar mass of exhaust", 0.1341,
+                            "R / mass of air", 0.287,
+                            "R / mass of fuel gas", 0.0489086,
+                            
+                            "acomb:",0.42,
+                            "bcomb:",0.49,
+                            "am:",0.59,
+                            "bm:",0.21,
+                            "cm:",-0.96,
+                            "delta_m:",0.27,
+
+                            "a_id:",0.39,
+                            "b_id:",0.105,
+                            "c_id:",3.12,
+                            "mWiebe:",0.1,
+
+                            "Air fuel ratio for reference point:",2.435696566131349,
+                            "ignition delay for reference point",1,
+                            "Mass at inlet valve closing for reference point [g]:",7462,
+                            "Engine speed for reference point [rpm]:",80,
+                            "Wiebe curve form coefficient for reference point:",0.1,
+                            "Combustion duration for reference point:",0.3667076110839844*60/(2*math.pi),
+                            "SMFR:",14500,
+                            "topen:",0.0005,
+                            "tclose",0.0005]
+        
+        
+        
+        for i in range(len(self.texts_values)):
+            if i%2!=0:
+                self.float_vars.append(tk.DoubleVar(value=self.texts_values[i]))
+            else:
+                self.texts.append(self.texts_values[i])
+
 
         for count, text in enumerate(self.texts):
             if count < 9:
@@ -318,7 +338,7 @@ class Notebook_0dCycle(ttk.Frame):
 
         for i in range(len(self.Labelframes)):
             self.Labelframes[i].pack(fill=BOTH, pady=10, padx=20)
-            
+
         self.update_idletasks()
 
         for i in range(len(self.labels)):
