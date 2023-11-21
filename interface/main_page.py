@@ -296,7 +296,7 @@ class Notebook_0dCycle(ttk.Frame):
                             "SMFR:",14500,
                             "topen:",0.0005,
                             "tclose",0.0005]
-        
+        x=0
         
         
         for i in range(len(self.texts_values)):
