@@ -27,6 +27,8 @@ class Notebook_Model_param(ttk.Frame):
 
         self.texts = []
 
+        self.reset = []
+
         self.float_vars = []
 
         self.texts_values= ["time_t:", 0,
@@ -37,6 +39,8 @@ class Notebook_Model_param(ttk.Frame):
                             "initial pressure ratio turbine:", 3.8,
                             "Initial_speed: ", 12.15,
                             "model time of the simulation:", 0.035,]
+        
+        self.default = self.texts_values.copy()
         
         
         for i in range(len(self.texts_values)):
@@ -50,6 +54,8 @@ class Notebook_Model_param(ttk.Frame):
                 self.frames.append(ttk.Frame(self.Labelframes[0]))
                 self.labels.append(ttk.Label(self.frames[count], text=text))
                 self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
+
 
                 
         
@@ -64,6 +70,7 @@ class Notebook_Model_param(ttk.Frame):
             self.frames[i].pack(side=TOP, anchor='w')
             self.labels[i].pack(side=LEFT, padx=5, pady=5)
             self.entrys[i].pack(side=LEFT, padx=5, pady=5)
+            self.reset[i].pack(side=RIGHT, padx=5, pady=5)
 
     def return_values(self):
         N_cycle = int(self.float_vars(1) // self.float_vars(2) +1)
@@ -216,11 +223,15 @@ class Notebook_PIDcontroller(ttk.Frame):
 
         self.float_vars = []
 
+        self.reset = []
+
         self.texts_values =["Number of engine cylinders:", 12,
                             "Constant for PID controller	kp:", 0.003,
                             "Constant for PID controller	kd:", 0,
                             "Constant for PID controller	ki:", 0.0015,
                             "Original injeciton time (at the beginning of the simulation):",0.01427586]
+        
+        self.default = self.texts_values.copy()
         
         for i in range(len(self.texts_values)):
             if i%2!=0:
@@ -234,10 +245,14 @@ class Notebook_PIDcontroller(ttk.Frame):
                 self.frames.append(ttk.Frame(self.Labelframes[0]))
                 self.labels.append(ttk.Label(self.frames[count], text=text))
                 self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
+
             else:
                 self.frames.append(ttk.Frame(self.Labelframes[1]))
                 self.labels.append(ttk.Label(self.frames[count], text=text))
                 self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
+
 
 
         # Steadystate
@@ -255,6 +270,7 @@ class Notebook_PIDcontroller(ttk.Frame):
             self.frames[i].pack(side=TOP, anchor='w')
             self.labels[i].pack(side=LEFT, padx=5, pady=5)
             self.entrys[i].pack(side=LEFT, padx=5, pady=5)
+            self.reset[i].pack(side=RIGHT, padx=5, pady=5)
                 
 
         # Position steadystate frame and label
@@ -283,6 +299,9 @@ class Notebook_PIDcontroller(ttk.Frame):
 
         return  Nord, [var.get() for var in self.float_vars]
 
+    def setDefaultVal(self, i):
+        self.entrys[i].delete(0, tk.END)
+        self.entrys[i].insert(0, self.default[i*2+1])
 
 ########### END SECOND SYSTEM #############################################################
 
@@ -313,6 +332,8 @@ class Notebook_0dCycle(ttk.Frame):
         self.texts = []
 
         self.float_vars = []
+
+        self.reset = []
 
         self.texts_values= ["Delta t:", 0.0001,
                             "Number of revolution per cycle:", 1,
@@ -357,6 +378,8 @@ class Notebook_0dCycle(ttk.Frame):
                             "topen:",0.0005,
                             "tclose",0.0005]
         
+        self.default = self.texts_values.copy()
+        
         
         for i in range(len(self.texts_values)):
             if i%2!=0:
@@ -371,25 +394,35 @@ class Notebook_0dCycle(ttk.Frame):
                 self.frames.append(ttk.Frame(self.Labelframes[0]))
                 self.labels.append(ttk.Label(self.frames[count], text=text))
                 self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
+
             else:
                 if count<19:
                     self.frames.append(ttk.Frame(self.Labelframes[1]))
                     self.labels.append(ttk.Label(self.frames[count], text=text))
                     self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                    self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
+
                 else:
                     if count<25:
                         self.frames.append(ttk.Frame(self.Labelframes[2]))
                         self.labels.append(ttk.Label(self.frames[count], text=text))
                         self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                        self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
+
                     else:
                         if count<29:
                             self.frames.append(ttk.Frame(self.Labelframes[3]))
                             self.labels.append(ttk.Label(self.frames[count], text=text))
                             self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                            self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
+
                         else:
                             self.frames.append(ttk.Frame(self.Labelframes[4]))
                             self.labels.append(ttk.Label(self.frames[count], text=text))
                             self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                            self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
+
                 
         
         self.pack(fill=BOTH, expand=YES)
@@ -404,11 +437,16 @@ class Notebook_0dCycle(ttk.Frame):
             self.frames[i].pack(side=TOP, anchor='w')
             self.labels[i].pack(side=LEFT, padx=5, pady=5)
             self.entrys[i].pack(side=LEFT, padx=5, pady=5)
+            self.reset[i].pack(side=RIGHT, padx=5, pady=5)
 
     def return_values(self):
 
         m_ivc =self.float_vars(12)
         return  m_ivc, [var.get() for var in self.float_vars]
+    
+    def setDefaultVal(self, i):
+        self.entrys[i].delete(0, tk.END)
+        self.entrys[i].insert(0, self.default[i*2+1])
 
 
 ########### END THIRD SYSTEM #############################################################
@@ -429,6 +467,8 @@ class Notebook_MVEM_model(ttk.Frame):
         self.frames_systems = []
 
         self.frames = []
+
+        self.reset = []
 
         self.Labelframes = [ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Constants"),
                             ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Initial pressures and temperatures"),
@@ -499,6 +539,8 @@ class Notebook_MVEM_model(ttk.Frame):
                            
                             "T:",32.32+273.15]
         
+        self.default = self.texts_values.copy()
+        
         
         for i in range(len(self.texts_values)):
             if i%2!=0:
@@ -512,60 +554,84 @@ class Notebook_MVEM_model(ttk.Frame):
                 self.frames.append(ttk.Frame(self.Labelframes[0]))
                 self.labels.append(ttk.Label(self.frames[count], text=text))
                 self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
+
             else:
                 if count<12:
                     self.frames.append(ttk.Frame(self.Labelframes[1]))
                     self.labels.append(ttk.Label(self.frames[count], text=text))
                     self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                    self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
+
                 else:
                     if count<14:
                         self.frames.append(ttk.Frame(self.Labelframes[2]))
                         self.labels.append(ttk.Label(self.frames[count], text=text))
                         self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                        self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
+
                     else:
                         if count<16:
                             self.frames.append(ttk.Frame(self.Labelframes[3]))
                             self.labels.append(ttk.Label(self.frames[count], text=text))
                             self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                            self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
+
                         else:
                             if count<18:
                                 self.frames.append(ttk.Frame(self.Labelframes[4]))
                                 self.labels.append(ttk.Label(self.frames[count], text=text))
                                 self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                                self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
+
                             else:
                                 if count<20:
                                     self.frames.append(ttk.Frame(self.Labelframes[5]))
                                     self.labels.append(ttk.Label(self.frames[count], text=text))
                                     self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                                    self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
+
                                 else:
                                     if count<23:
                                         self.frames.append(ttk.Frame(self.Labelframes[6]))
                                         self.labels.append(ttk.Label(self.frames[count], text=text))
                                         self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                                        self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
+
                                     else:
                                         if count<26:
                                             self.frames.append(ttk.Frame(self.Labelframes[7]))
                                             self.labels.append(ttk.Label(self.frames[count], text=text))
                                             self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                                            self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
+
                                         else:
                                             if count<28:
                                                 self.frames.append(ttk.Frame(self.Labelframes[8]))
                                                 self.labels.append(ttk.Label(self.frames[count], text=text))
                                                 self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                                                self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
+
                                             else:
                                                 if count<32:
                                                     self.frames.append(ttk.Frame(self.Labelframes[9]))
                                                     self.labels.append(ttk.Label(self.frames[count], text=text))
                                                     self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                                                    self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
+
                                                 else:
                                                     if count<35:
                                                         self.frames.append(ttk.Frame(self.Labelframes[10]))
                                                         self.labels.append(ttk.Label(self.frames[count], text=text))
                                                         self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                                                        self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
+
                                                     else:
                                                         self.frames.append(ttk.Frame(self.Labelframes[11]))
                                                         self.labels.append(ttk.Label(self.frames[count], text=text))
                                                         self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                                                        self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
+
                                     
         
         self.pack(fill=BOTH, expand=YES)
@@ -580,10 +646,15 @@ class Notebook_MVEM_model(ttk.Frame):
             self.frames[i].pack(side=TOP, anchor='w')
             self.labels[i].pack(side=LEFT, padx=5, pady=5)
             self.entrys[i].pack(side=LEFT, padx=5, pady=5)
+            self.reset[i].pack(side=RIGHT, padx=5, pady=5)
 
     def return_values(self):
 
         return  [var.get() for var in self.float_vars]
+    
+    def setDefaultVal(self, i):
+        self.entrys[i].delete(0, tk.END)
+        self.entrys[i].insert(0, self.default[i*2+1])
     
 ############################# END MVEM SYSTEM #############################################################
 
@@ -598,6 +669,8 @@ class Notebook_Param_energy(ttk.Frame):
         self.frames_systems = []
 
         self.frames = []
+
+        self.reset = []
 
         self.Labelframes = [ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Constants"),
                             ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Coefficients for fonction for fuel cons"),
@@ -668,6 +741,8 @@ class Notebook_Param_energy(ttk.Frame):
                             "Efficience η2:",0.8,
                             "Efficience ηl:",0.8,]
         
+        self.default = self.texts_values.copy()
+        
         
         for i in range(len(self.texts_values)):
             if i%2!=0:
@@ -682,31 +757,43 @@ class Notebook_Param_energy(ttk.Frame):
                 self.frames.append(ttk.Frame(self.Labelframes[0]))
                 self.labels.append(ttk.Label(self.frames[count], text=text))
                 self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
+
             else:
                 if count<28:
                     self.frames.append(ttk.Frame(self.Labelframes[1]))
                     self.labels.append(ttk.Label(self.frames[count], text=text))
                     self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                    self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
+
                 else:
                     if count<33:
                         self.frames.append(ttk.Frame(self.Labelframes[2]))
                         self.labels.append(ttk.Label(self.frames[count], text=text))
                         self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                        self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
+
                     else:
                         if count<38:
                             self.frames.append(ttk.Frame(self.Labelframes[3]))
                             self.labels.append(ttk.Label(self.frames[count], text=text))
                             self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                            self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
+
                         
                         else:
                             if count<43:
                                 self.frames.append(ttk.Frame(self.Labelframes[4]))
                                 self.labels.append(ttk.Label(self.frames[count], text=text))
                                 self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                                self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
+
                             else:
                                 self.frames.append(ttk.Frame(self.Labelframes[5]))
                                 self.labels.append(ttk.Label(self.frames[count], text=text))
                                 self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                                self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
+
                 
         
         self.pack(fill=BOTH, expand=YES)
@@ -721,8 +808,13 @@ class Notebook_Param_energy(ttk.Frame):
             self.frames[i].pack(side=TOP, anchor='w')
             self.labels[i].pack(side=LEFT, padx=5, pady=5)
             self.entrys[i].pack(side=LEFT, padx=5, pady=5)
+            self.reset[i].pack(side=RIGHT, padx=5, pady=5)
 
     def return_values(self):
 
 
         return  [var.get() for var in self.float_vars]
+    
+    def setDefaultVal(self, i):
+        self.entrys[i].delete(0, tk.END)
+        self.entrys[i].insert(0, self.default[i*2+1])
