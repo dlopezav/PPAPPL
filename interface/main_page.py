@@ -14,19 +14,17 @@ class main_page(ttk.Frame):
 
         self.titre = ttk.Label(self, text=titre_text, style='main.TLabel')
 
-        self.values = []
+        self.texts = ["Model Param","PID propeller","PID controller","od Cycle","MVEM model","Param energy"]
 
         self.notebook = ttk.Notebook(self, bootstyle="info")
 
-        self.frames_notebook = [Notebook_propeller(self.notebook),Notebook_PIDcontroller(self.notebook),
+        self.frames_notebook = [Notebook_Model_param(self.notebook),Notebook_propeller(self.notebook),
+                                Notebook_PIDcontroller(self.notebook),
                                 Notebook_0dCycle(self.notebook),Notebook_MVEM_model(self.notebook),
                                 Notebook_Param_energy(self.notebook)]
-
-        self.notebook.add(self.frames_notebook[0],text="PID propeller")
-        self.notebook.add(self.frames_notebook[1],text="PID controller")
-        self.notebook.add(self.frames_notebook[2],text="od Cycle")
-        self.notebook.add(self.frames_notebook[3],text="MVEM model")
-        self.notebook.add(self.frames_notebook[4],text="Param energy")
+        
+        for count,text in enumerate(self.texts):
+            self.notebook.add(self.frames_notebook[count],text=text)
 
     def show(self):
         self.pack(fill=BOTH, expand=YES)
