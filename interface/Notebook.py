@@ -9,6 +9,69 @@ from ttkbootstrap.scrolled import ScrolledFrame
 import pandas as pd
 import math
 
+
+
+class Notebook_Model_param(ttk.Frame):
+    def __init__(self, tab_notebook):
+        super().__init__(tab_notebook, style='cyborg')
+
+        self.frames_systems = []
+
+        self.frames = []
+
+        self.Labelframes = [ttk.LabelFrame(self, bootstyle='info',text="MODEL")]
+
+        self.labels = []
+
+        self.entrys = []
+
+        self.texts = []
+
+        self.float_vars = []
+
+        self.texts_values= ["time_t:", 0,
+                            "total_time:", 0.005 ,
+                            "deltat2:",0.005,
+                            "initial value of turbocharger speed [unit?]:", 7522,
+                            "initial pressure ratio compressor:",2.4,
+                            "initial pressure ratio turbine:", 3.8,
+                            "Initial_speed: ", 12.15,
+                            "model time of the simulation:", 0.035,]
+        
+        
+        for i in range(len(self.texts_values)):
+            if i%2!=0:
+                self.float_vars.append(tk.DoubleVar(value=self.texts_values[i]))
+            else:
+                self.texts.append(self.texts_values[i])
+
+
+        for count, text in enumerate(self.texts):
+                self.frames.append(ttk.Frame(self.Labelframes[0]))
+                self.labels.append(ttk.Label(self.frames[count], text=text))
+                self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+
+                
+        
+        self.pack(fill=BOTH, expand=YES)
+
+        for i in range(len(self.Labelframes)):
+            self.Labelframes[i].pack(fill=BOTH, pady=10, padx=20)
+
+        self.update_idletasks()
+
+        for i in range(len(self.labels)):
+            self.frames[i].pack(side=TOP, anchor='w')
+            self.labels[i].pack(side=LEFT, padx=5, pady=5)
+            self.entrys[i].pack(side=LEFT, padx=5, pady=5)
+
+    def return_values(self):
+        N_cycle = int(self.float_vars(1) // self.float_vars(2) +1)
+
+        return  N_cycle,[var.get() for var in self.float_vars]
+    
+
+
 ################ First system propeller ################################
 
 class Notebook_propeller(ttk.Frame):
@@ -124,7 +187,9 @@ class Notebook_propeller(ttk.Frame):
         u2_nump = df['u2'].to_numpy()
         v2_nump = df['v2'].to_numpy()
 
-        return n1_nump, ct_nump, s1_nump, t1_nump, u1_nump, v1_nump, n2_nump, cq_nump, s2_nump, t2_nump, u2_nump, v2_nump, \
+        m_hydro = self.float_vars(0)*self.float_vars(1)
+
+        return m_hydro, n1_nump, ct_nump, s1_nump, t1_nump, u1_nump, v1_nump, n2_nump, cq_nump, s2_nump, t2_nump, u2_nump, v2_nump, \
                [var.get() for var in self.float_vars]
     
 
@@ -342,8 +407,8 @@ class Notebook_0dCycle(ttk.Frame):
 
     def return_values(self):
 
-
-        return  [var.get() for var in self.float_vars]
+        m_ivc =self.float_vars(12)
+        return  m_ivc, [var.get() for var in self.float_vars]
 
 
 ########### END THIRD SYSTEM #############################################################
@@ -518,7 +583,6 @@ class Notebook_MVEM_model(ttk.Frame):
 
     def return_values(self):
 
-
         return  [var.get() for var in self.float_vars]
     
 ############################# END MVEM SYSTEM #############################################################
@@ -536,6 +600,7 @@ class Notebook_Param_energy(ttk.Frame):
         self.frames = []
 
         self.Labelframes = [ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Constants"),
+                            ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Coefficients for fonction for fuel cons"),
                             ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Main Engine 1"),
                             ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Main Engine 2"),
                             ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Auxiliary Engine 1"),
@@ -549,13 +614,14 @@ class Notebook_Param_energy(ttk.Frame):
 
         self.float_vars = []
 
-        self.texts_values= ["Lower heating value 1:", 100,
+        self.texts_values= ["Q_ab_max:", 100,
+                            "Q_ab_min",3,
+                            "Max power",30,
                             "Lower heating value 1:", 100,
                             "Lower heating value 2:", 0.0,
                             "Lower heating value 3:", 0.0,
                             "Lower heating value 4:",0.0 ,
                             "Lower heating value 5:",0.0,
-
                             "Maximum continuous rating 1:", 63840000,
                             "Maximum continuous rating 2:", 0.0,
                             "Maximum continuous rating 3:", 100,
@@ -567,20 +633,17 @@ class Notebook_Param_energy(ttk.Frame):
                             "an 3:", 1.0,
                             "an 4:", 1.0,
                             "an 5:", 1.0,
-
                             "bn 1:", 1.0,
                             "bn 2:", 1.0,
                             "bn 3:", 1.0,
                             "bn 4:", 1.0,
                             "bn 5:", 1.0,
-
                             "cn 1:", 1.0,
                             "cn 2:", 1.0,
                             "cn 3:", 1.0,
                             "cn 4:", 1.0,
                             "cn 5:", 1.0,
 
-                            "Maximum power [W]:", 63840000,
                             "Maximum power [W]:", 63840000,
                             "Minimum power [W]:", 0.0,
                             "Efficience η1:",0.8 ,
@@ -614,30 +677,36 @@ class Notebook_Param_energy(ttk.Frame):
 
 
         for count, text in enumerate(self.texts):
-            if count < 9:
+            if count < 13:
                 # For the ones outside in the first labelframe
                 self.frames.append(ttk.Frame(self.Labelframes[0]))
                 self.labels.append(ttk.Label(self.frames[count], text=text))
                 self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
             else:
-                if count<19:
+                if count<28:
                     self.frames.append(ttk.Frame(self.Labelframes[1]))
                     self.labels.append(ttk.Label(self.frames[count], text=text))
                     self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
                 else:
-                    if count<25:
+                    if count<33:
                         self.frames.append(ttk.Frame(self.Labelframes[2]))
                         self.labels.append(ttk.Label(self.frames[count], text=text))
                         self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
                     else:
-                        if count<29:
+                        if count<38:
                             self.frames.append(ttk.Frame(self.Labelframes[3]))
                             self.labels.append(ttk.Label(self.frames[count], text=text))
                             self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                        
                         else:
-                            self.frames.append(ttk.Frame(self.Labelframes[4]))
-                            self.labels.append(ttk.Label(self.frames[count], text=text))
-                            self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                            if count<43:
+                                self.frames.append(ttk.Frame(self.Labelframes[4]))
+                                self.labels.append(ttk.Label(self.frames[count], text=text))
+                                self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                            else:
+                                self.frames.append(ttk.Frame(self.Labelframes[5]))
+                                self.labels.append(ttk.Label(self.frames[count], text=text))
+                                self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
                 
         
         self.pack(fill=BOTH, expand=YES)
