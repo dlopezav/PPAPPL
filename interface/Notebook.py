@@ -510,3 +510,140 @@ class Notebook_MVEM_model(ttk.Frame):
 
 
         return  [var.get() for var in self.float_vars]
+    
+############################# END MVEM SYSTEM #############################################################
+
+############################ PARAM Optimisation energy demand BEGIN ################################################
+
+class Notebook_Param_energy(ttk.Frame):
+    def __init__(self, tab_notebook):
+        super().__init__(tab_notebook, style='cyborg')
+    
+        self.scrollframe = ScrolledFrame(self)
+
+        self.frames_systems = []
+
+        self.frames = []
+
+        self.Labelframes = [ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Constants"),
+                            ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Main Engine 1"),
+                            ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Main Engine 2"),
+                            ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Auxiliary Engine 1"),
+                            ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Auxiliary Engine 2")]
+
+        self.labels = []
+
+        self.entrys = []
+
+        self.texts = []
+
+        self.float_vars = []
+
+        self.texts_values= ["Lower heating value 1:", 100,
+                            "Lower heating value 1:", 100,
+                            "Lower heating value 2:", 0.0,
+                            "Lower heating value 3:", 0.0,
+                            "Lower heating value 4:",0.0 ,
+                            "Lower heating value 5:",0.0,
+
+                            "Maximum continuous rating 1:", 63840000,
+                            "Maximum continuous rating 2:", 0.0,
+                            "Maximum continuous rating 3:", 100,
+                            "Maximum continuous rating 4:",0.0 ,
+                            "Maximum continuous rating 5:",0.0,
+
+                            "an 1:", 1.0,
+                            "an 2:", 1.0,
+                            "an 3:", 1.0,
+                            "an 4:", 1.0,
+                            "an 5:", 1.0,
+
+                            "bn 1:", 1.0,
+                            "bn 2:", 1.0,
+                            "bn 3:", 1.0,
+                            "bn 4:", 1.0,
+                            "bn 5:", 1.0,
+
+                            "cn 1:", 1.0,
+                            "cn 2:", 1.0,
+                            "cn 3:", 1.0,
+                            "cn 4:", 1.0,
+                            "cn 5:", 1.0,
+
+                            "Maximum power [W]:", 63840000,
+                            "Maximum power [W]:", 63840000,
+                            "Minimum power [W]:", 0.0,
+                            "Efficience η1:",0.8 ,
+                            "Efficience η2:",0.8,
+                            "Efficience ηl:",0.8,
+
+                            "Maximum power [W]:", 1,
+                            "Minimum power [W]:", 0.0,
+                            "Efficience η1:",0.8 ,
+                            "Efficience η2:",0.8,
+                            "Efficience ηl:",0.8,
+
+                            "Maximum power [W]:", 1,
+                            "Minimum power [W]:", 0.0,
+                            "Efficience η1:",0.8 ,
+                            "Efficience η2:",0.8,
+                            "Efficience ηl:",0.8,
+
+                            "Maximum power [W]:", 1,
+                            "Minimum power [W]:", 0.0,
+                            "Efficience η1:",0.8 ,
+                            "Efficience η2:",0.8,
+                            "Efficience ηl:",0.8,]
+        
+        
+        for i in range(len(self.texts_values)):
+            if i%2!=0:
+                self.float_vars.append(tk.DoubleVar(value=self.texts_values[i]))
+            else:
+                self.texts.append(self.texts_values[i])
+
+
+        for count, text in enumerate(self.texts):
+            if count < 9:
+                # For the ones outside in the first labelframe
+                self.frames.append(ttk.Frame(self.Labelframes[0]))
+                self.labels.append(ttk.Label(self.frames[count], text=text))
+                self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+            else:
+                if count<19:
+                    self.frames.append(ttk.Frame(self.Labelframes[1]))
+                    self.labels.append(ttk.Label(self.frames[count], text=text))
+                    self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                else:
+                    if count<25:
+                        self.frames.append(ttk.Frame(self.Labelframes[2]))
+                        self.labels.append(ttk.Label(self.frames[count], text=text))
+                        self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                    else:
+                        if count<29:
+                            self.frames.append(ttk.Frame(self.Labelframes[3]))
+                            self.labels.append(ttk.Label(self.frames[count], text=text))
+                            self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                        else:
+                            self.frames.append(ttk.Frame(self.Labelframes[4]))
+                            self.labels.append(ttk.Label(self.frames[count], text=text))
+                            self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                
+        
+        self.pack(fill=BOTH, expand=YES)
+        self.scrollframe.pack(fill=BOTH,expand=YES)
+
+        for i in range(len(self.Labelframes)):
+            self.Labelframes[i].pack(fill=BOTH, pady=10, padx=20)
+
+        self.update_idletasks()
+
+        for i in range(len(self.labels)):
+            self.frames[i].pack(side=TOP, anchor='w')
+            self.labels[i].pack(side=LEFT, padx=5, pady=5)
+            self.entrys[i].pack(side=LEFT, padx=5, pady=5)
+
+    def return_values(self):
+
+
+        return  [var.get() for var in self.float_vars]
