@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkextrafont import Font
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 from ttkbootstrap import Style
@@ -90,8 +91,10 @@ if __name__ == "__main__":
     app = ttk.Window("PAPPL", "cyborg", resizable=(False, False), size=[1080,720], iconphoto='icon.png')
     app.place_window_center()
 
+    font = Font(file="./interface/Nunito/static/Nunito-Black.ttf")
+
     style = Style()
-    style.configure('main.TLabel', font=('Nunito Sans', 40))
+    style.configure('main.TLabel', font=(font, 40))
 
     MainProgram(app)
 
