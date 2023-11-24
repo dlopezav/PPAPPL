@@ -32,6 +32,8 @@ class Notebook_propeller(ttk.Frame):
 
         self.float_vars = []
 
+        self.reset = []
+
         self.texts_values =["Ship displacement volume [m3]:", 112404,
                             "Density of sea water [kg/m^3]:", 1026,
                             "Mass of ship [kg]:", 260000000,
@@ -43,22 +45,27 @@ class Notebook_propeller(ttk.Frame):
                             "Pitch to diameter ratio, p/Dp:", 0.93846154,
                             "Ship wake fraction, w, which is considered constant \n taking values in the range from 0.20:", 0.3]
         
+        self.default = self.texts_values.copy()
+
         for i in range(len(self.texts_values)):
             if i%2!=0:
                 self.float_vars.append(tk.DoubleVar(value=self.texts_values[i]))
             else:
                 self.texts.append(self.texts_values[i])
-
+            
+        
         for count, text in enumerate(self.texts):
             if count < 2:
                 # For the ones outside in the first labelframe
                 self.frames.append(ttk.Frame(self.Labelframes[0]))
                 self.labels.append(ttk.Label(self.frames[count], text=text))
                 self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
             else:
                 self.frames.append(ttk.Frame(self.Labelframes[1]))
                 self.labels.append(ttk.Label(self.frames[count], text=text))
                 self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+                self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda  count=count: self.setDefaultVal(count), style='danger-link'))
 
 
         # Wageningen
@@ -77,6 +84,7 @@ class Notebook_propeller(ttk.Frame):
             self.frames[i].pack(side=TOP, anchor='w')
             self.labels[i].pack(side=LEFT, padx=5, pady=5)
             self.entrys[i].pack(side=LEFT, padx=5, pady=5)
+            self.reset[i].pack(side=RIGHT, padx=5, pady=5)
 
 
         # Position wageningen frame and label
@@ -94,7 +102,9 @@ class Notebook_propeller(ttk.Frame):
         self.wageningen_file_entry.insert(0, self.file_path)
         self.wageningen_file_entry.config(state='readonly')
 
-        
+    def setDefaultVal(self, i):
+        self.entrys[i].delete(0, tk.END)
+        self.entrys[i].insert(0, self.default[i*2+1])
 
   
     def return_values(self):
