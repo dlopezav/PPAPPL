@@ -14,6 +14,8 @@ class main_page(ttk.Frame):
 
         self.titre = ttk.Label(self, text=titre_text, style='main.TLabel')
 
+        self.values = []
+
         self.texts = ["Model Param","PID propeller","PID controller","od Cycle","MVEM model","Param energy"]
 
         self.notebook = ttk.Notebook(self, bootstyle="info")
@@ -38,8 +40,9 @@ class main_page(ttk.Frame):
 
     def return_all_values(self):
         for i in range(len(self.frames_notebook)):
-            self.values.append(self.frames_notebook[i].return_values())
-        
+            self.values.extend(self.frames_notebook[i].return_values())
+
         return self.values
+        
         
 

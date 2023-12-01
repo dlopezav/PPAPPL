@@ -73,9 +73,13 @@ class Notebook_Model_param(ttk.Frame):
             self.reset[i].pack(side=RIGHT, padx=5, pady=5)
 
     def return_values(self):
-        N_cycle = int(self.float_vars(1) // self.float_vars(2) +1)
 
-        return  N_cycle,[var.get() for var in self.float_vars]
+        self.float_vars.append(tk.DoubleVar(value = int(self.float_vars[1].get() // self.float_vars[2].get() + 1)))
+        return  [var.get() for var in self.float_vars]
+    
+    def setDefaultVal(self, i):
+        self.entrys[i].delete(0, tk.END)
+        self.entrys[i].insert(0, self.default[i*2+1])
     
 
 
@@ -178,26 +182,26 @@ class Notebook_propeller(ttk.Frame):
 
   
     def return_values(self):
-
         df = pd.read_excel(self.file_path)
-        n1_nump = df['n1'].to_numpy()
-        ct_nump = df['ct'].to_numpy()
-        s1_nump = df['s'].to_numpy()
-        t1_nump = df['t'].to_numpy()
-        u1_nump = df['u'].to_numpy()
-        v1_nump = df['v'].to_numpy()
 
-        n2_nump = df['n2'].to_numpy()
-        cq_nump = df['cq'].to_numpy()
-        s2_nump = df['s2'].to_numpy()
-        t2_nump = df['t2'].to_numpy()
-        u2_nump = df['u2'].to_numpy()
-        v2_nump = df['v2'].to_numpy()
+        self.float_vars.append(tk.DoubleVar(value=float(df['n1'].iloc[0])))
+        self.float_vars.append(tk.DoubleVar(value=float(df['ct'].iloc[0])))
+        self.float_vars.append(tk.DoubleVar(value=float(df['s'].iloc[0])))
+        self.float_vars.append(tk.DoubleVar(value=float(df['t'].iloc[0])))
+        self.float_vars.append(tk.DoubleVar(value=float(df['u'].iloc[0])))
+        self.float_vars.append(tk.DoubleVar(value=float(df['v'].iloc[0])))
 
-        m_hydro = self.float_vars(0)*self.float_vars(1)
+        self.float_vars.append(tk.DoubleVar(value=float(df['n2'].iloc[0])))
+        self.float_vars.append(tk.DoubleVar(value=float(df['cq'].iloc[0])))
+        self.float_vars.append(tk.DoubleVar(value=float(df['s2'].iloc[0])))
+        self.float_vars.append(tk.DoubleVar(value=float(df['t2'].iloc[0])))
+        self.float_vars.append(tk.DoubleVar(value=float(df['u2'].iloc[0])))
+        self.float_vars.append(tk.DoubleVar(value=float(df['v2'].iloc[0])))
 
-        return m_hydro, n1_nump, ct_nump, s1_nump, t1_nump, u1_nump, v1_nump, n2_nump, cq_nump, s2_nump, t2_nump, u2_nump, v2_nump, \
-               [var.get() for var in self.float_vars]
+        self.float_vars.append(tk.DoubleVar(value=float(self.float_vars[0].get() * self.float_vars[1].get())))
+
+        return [var.get() for var in self.float_vars]
+
     
 
 ################ END FIRST SYSTEM ######################################################
@@ -292,12 +296,12 @@ class Notebook_PIDcontroller(ttk.Frame):
 
   
     def return_values(self):
-
-        #order of speed 
-        steadystate= pd.read_excel(self.file_path)
-        Nord = 2*math.pi/60*steadystate['me_ne'].to_numpy()
-
-        return  Nord, [var.get() for var in self.float_vars]
+        
+        steadystate = pd.read_excel(self.file_path)
+        me_ne_value = steadystate['me_ne'].iloc[0]
+        calculated_value = 2 * math.pi / 60 * me_ne_value
+        self.float_vars.append(tk.DoubleVar(value=float(calculated_value)))
+        return [var.get() for var in self.float_vars]
 
     def setDefaultVal(self, i):
         self.entrys[i].delete(0, tk.END)
@@ -440,9 +444,8 @@ class Notebook_0dCycle(ttk.Frame):
             self.reset[i].pack(side=RIGHT, padx=5, pady=5)
 
     def return_values(self):
-
-        m_ivc =self.float_vars(12)
-        return  m_ivc, [var.get() for var in self.float_vars]
+        
+        return  [var.get() for var in self.float_vars]
     
     def setDefaultVal(self, i):
         self.entrys[i].delete(0, tk.END)

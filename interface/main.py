@@ -41,8 +41,9 @@ class DowBar(ttk.Frame):
         
         frame = ttk.Frame(self, style='secondary')
         frame.pack()
-        
-        sauvegarde = ttk.Button(frame, style='success.Solid.TButton', text='sauvegarder', width=35)
+
+
+        sauvegarde = ttk.Button(frame, style='success.Solid.TButton', text='sauvegarder',width=35) 
         sauvegarde.pack(side=LEFT)
         
         recuperer = ttk.Button(frame, style='danger.Solid.TButton', text='recuperer', width=35)
