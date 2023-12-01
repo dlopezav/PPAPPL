@@ -10,7 +10,6 @@ import pandas as pd
 import math
 
 
-
 class Notebook_Model_param(ttk.Frame):
     def __init__(self, tab_notebook):
         super().__init__(tab_notebook, style='cyborg')
@@ -171,8 +170,10 @@ class Notebook_propeller(ttk.Frame):
 
 
     def browse_wageningen_file(self):
-
-        self.file_path = filedialog.askopenfilename(filetypes=[("Excel files", "*.xlsx;*.xls")])
+        ft = [("Excel files", ".xlsx .xls")]
+        self.file_path = filedialog.askopenfilename(initialdir="../",
+                        filetypes=ft,
+                        title="Choose a file.")
         self.wageningen_file_entry.config(state='normal')
         self.wageningen_file_entry.delete(0, tk.END)
         self.wageningen_file_entry.insert(0, self.file_path)
@@ -288,8 +289,11 @@ class Notebook_PIDcontroller(ttk.Frame):
 
 
     def browse_steadystate_file(self):
-
-        self.file_path = filedialog.askopenfilename(filetypes=[("Excel files", "*.xlsx;*.xls")])
+        ft = [("Excel files", ".xlsx .xls")]
+        self.file_path = filedialog.askopenfilename(initialdir="../",
+                        filetypes=ft,
+                        title="Choose a file.")
+        
         self.steadystate_file_entry.config(state='normal')
         self.steadystate_file_entry.delete(0, tk.END)
         self.steadystate_file_entry.insert(0, self.file_path)
