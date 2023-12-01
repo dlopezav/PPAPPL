@@ -31,14 +31,15 @@ class Notebook_Model_param(ttk.Frame):
 
         self.float_vars = []
 
-        self.texts_values= ["time_t:", 0,
-                            "total_time:", 0.005 ,
-                            "deltat2:",0.005,
-                            "initial value of turbocharger speed [unit?]:", 7522,
-                            "initial pressure ratio compressor:",2.4,
-                            "initial pressure ratio turbine:", 3.8,
-                            "Initial_speed: ", 12.15,
-                            "model time of the simulation:", 0.035,]
+        self.texts_values= ["time_t:", 0, #time_t 0 
+                            "total_time:", 0.005 , #total_time 1
+                            "deltat2:",0.005, #delta2 2
+                            "initial value of turbocharger speed [unit?]:", 7522, # NTC_ini 3
+                            "initial pressure ratio compressor:",2.4, # prc 4
+                            "initial pressure ratio turbine:", 3.8, # prt 5
+                            "Initial_speed: ", 12.15, # Vs_ini 6
+                            "model time of the simulation:", 0.035, #total_time 7
+                            ]
         
         self.default = self.texts_values.copy()
         
@@ -74,7 +75,7 @@ class Notebook_Model_param(ttk.Frame):
 
     def return_values(self):
 
-        self.float_vars.append(tk.DoubleVar(value = int(self.float_vars[1].get() // self.float_vars[2].get() + 1)))
+        self.float_vars.append(tk.DoubleVar(value = int(self.float_vars[1].get() // self.float_vars[2].get() + 1)))# N_cycle 8
         return  [var.get() for var in self.float_vars]
     
     def setDefaultVal(self, i):
@@ -108,16 +109,17 @@ class Notebook_propeller(ttk.Frame):
 
         self.reset = []
 
-        self.texts_values =["Ship displacement volume [m3]:", 112404,
-                            "Density of sea water [kg/m^3]:", 1026,
-                            "Mass of ship [kg]:", 260000000,
-                            "Diameter [m]:", 10,
-                            "Thrust:", 0.2,
-                            "dVs_dt = c_1 * V_s^2 [kg/m]:", 26250,
-                            "Number of propeller blades, zp:", 6,
-                            "Disk area coefficient, AE/Ao:", 0.82,
-                            "Pitch to diameter ratio, p/Dp:", 0.93846154,
-                            "Ship wake fraction, w, which is considered constant \n taking values in the range from 0.20:", 0.3]
+        self.texts_values =["Ship displacement volume [m3]:", 112404,# sh_displ 9
+                            "Density of sea water [kg/m^3]:", 1026,# rho_sw 10
+                            "Mass of ship [kg]:", 260000000,# mass_of_shi^p 11 
+                            "Diameter [m]:", 10,# D_p 12 
+                            "Thrust:", 0.2,# thrust 13
+                            "dVs_dt = c_1 * V_s^2 [kg/m]:", 26250,# c_1 14
+                            "Number of propeller blades, zp:", 6,# z_p 15
+                            "Disk area coefficient, AE/Ao:", 0.82,# A_e_A_o 16
+                            "Pitch to diameter ratio, p/Dp:", 0.93846154,# p_D_p 17
+                            "Ship wake fraction, w, which is considered constant \n taking values in the range from 0.20:", 0.3 #omega 18
+                            ]
         
         self.default = self.texts_values.copy()
 
@@ -184,21 +186,21 @@ class Notebook_propeller(ttk.Frame):
     def return_values(self):
         df = pd.read_excel(self.file_path)
 
-        self.float_vars.append(tk.DoubleVar(value=float(df['n1'].iloc[0])))
-        self.float_vars.append(tk.DoubleVar(value=float(df['ct'].iloc[0])))
-        self.float_vars.append(tk.DoubleVar(value=float(df['s'].iloc[0])))
-        self.float_vars.append(tk.DoubleVar(value=float(df['t'].iloc[0])))
-        self.float_vars.append(tk.DoubleVar(value=float(df['u'].iloc[0])))
-        self.float_vars.append(tk.DoubleVar(value=float(df['v'].iloc[0])))
+        self.float_vars.append(tk.DoubleVar(value=float(df['n1'].iloc[0])))#n1_nump 19
+        self.float_vars.append(tk.DoubleVar(value=float(df['ct'].iloc[0])))#ct_nump 20
+        self.float_vars.append(tk.DoubleVar(value=float(df['s'].iloc[0])))#s1_nump 21
+        self.float_vars.append(tk.DoubleVar(value=float(df['t'].iloc[0])))#t1_nump 22 
+        self.float_vars.append(tk.DoubleVar(value=float(df['u'].iloc[0])))#u1_nump 23
+        self.float_vars.append(tk.DoubleVar(value=float(df['v'].iloc[0])))#v1_nump 24
 
-        self.float_vars.append(tk.DoubleVar(value=float(df['n2'].iloc[0])))
-        self.float_vars.append(tk.DoubleVar(value=float(df['cq'].iloc[0])))
-        self.float_vars.append(tk.DoubleVar(value=float(df['s2'].iloc[0])))
-        self.float_vars.append(tk.DoubleVar(value=float(df['t2'].iloc[0])))
-        self.float_vars.append(tk.DoubleVar(value=float(df['u2'].iloc[0])))
-        self.float_vars.append(tk.DoubleVar(value=float(df['v2'].iloc[0])))
+        self.float_vars.append(tk.DoubleVar(value=float(df['n2'].iloc[0])))#n2_nump 25
+        self.float_vars.append(tk.DoubleVar(value=float(df['cq'].iloc[0])))#cq_nump 26
+        self.float_vars.append(tk.DoubleVar(value=float(df['s2'].iloc[0])))#s2_nump 27 
+        self.float_vars.append(tk.DoubleVar(value=float(df['t2'].iloc[0])))#t2_nump 28
+        self.float_vars.append(tk.DoubleVar(value=float(df['u2'].iloc[0])))#u2_nump 29
+        self.float_vars.append(tk.DoubleVar(value=float(df['v2'].iloc[0])))#v2_nump 30
 
-        self.float_vars.append(tk.DoubleVar(value=float(self.float_vars[0].get() * self.float_vars[1].get())))
+        self.float_vars.append(tk.DoubleVar(value=float(self.float_vars[0].get() * self.float_vars[1].get())))#m_hydro 31
 
         return [var.get() for var in self.float_vars]
 
@@ -229,11 +231,12 @@ class Notebook_PIDcontroller(ttk.Frame):
 
         self.reset = []
 
-        self.texts_values =["Number of engine cylinders:", 12,
-                            "Constant for PID controller	kp:", 0.003,
-                            "Constant for PID controller	kd:", 0,
-                            "Constant for PID controller	ki:", 0.0015,
-                            "Original injeciton time (at the beginning of the simulation):",0.01427586]
+        self.texts_values =["Number of engine cylinders:", 12, #zc 32
+                            "Constant for PID controller	kp:", 0.003, #kp 33
+                            "Constant for PID controller	kd:", 0, #kd  34
+                            "Constant for PID controller	ki:", 0.0015, #ki 35
+                            "Original injeciton time (at the beginning of the simulation):",0.01427586 #xr_o 36
+                            ]
         
         self.default = self.texts_values.copy()
         
@@ -296,11 +299,11 @@ class Notebook_PIDcontroller(ttk.Frame):
 
   
     def return_values(self):
-        
+
         steadystate = pd.read_excel(self.file_path)
         me_ne_value = steadystate['me_ne'].iloc[0]
         calculated_value = 2 * math.pi / 60 * me_ne_value
-        self.float_vars.append(tk.DoubleVar(value=float(calculated_value)))
+        self.float_vars.append(tk.DoubleVar(value=float(calculated_value))) #Nord 37
         return [var.get() for var in self.float_vars]
 
     def setDefaultVal(self, i):
@@ -339,48 +342,49 @@ class Notebook_0dCycle(ttk.Frame):
 
         self.reset = []
 
-        self.texts_values= ["Delta t:", 0.0001,
-                            "Number of revolution per cycle:", 1,
-                            "Clearance volume [cm3]:",164671,
-                            "Lower heating value :", 42707,
-                            "wall surface [units ?]:",1.102343986,
-                            "Stroke:", 3.468,
-                            "l: ", 3468,
-                            "ar:", 1734,
-                            "Perfect gas constant:",8.314462,
+        self.texts_values= ["Delta t:", 0.0001,#deltat 38
+                            "Number of revolution per cycle:", 1,#rev_cy 39
+                            "Clearance volume [cm3]:",164671,#Vc 40
+                            "Lower heating value :", 42707,#lhv 41
+                            "wall surface [units ?]:",1.102343986,#Sw 42
+                            "Stroke:", 3.468,#stroke 43
+                            "l: ", 3468,#l 44
+                            "ar:", 1734,#ar 45
+                            "Perfect gas constant:",8.314462,#R 46
 
-                            "Tw [K]:",300+273.15,
-                            "Pressure at inlet valve closing [bar]:", 4.1,
-                            "Temperature at the inlet valve closing [K]:", 307,
-                            "Initial masse in the cylinder [g]:",7462,
-                            "Compression ratio:", 15,
-                            "reference temperature [K]:", 298.15,
-                            "Stochiometric coefficient:", 14.8,
-                            "R / molar mass of exhaust", 0.1341,
-                            "R / mass of air", 0.287,
-                            "R / mass of fuel gas", 0.0489086,
+                            "Tw [K]:",300+273.15,#Tw 47
+                            "Pressure at inlet valve closing [bar]:", 4.1,#p_ivc 48
+                            "Temperature at the inlet valve closing [K]:", 307,#T_ivc 49
+                            "Initial masse in the cylinder [g]:",7462,#ma_ini 50
+                            "Compression ratio:", 15,#rc 51
+                            "reference temperature [K]:", 298.15,#Tref 52
+                            "Stochiometric coefficient:", 14.8,#Cstoich 53
+                            "R / molar mass of exhaust", 0.1341,#re 54
+                            "R / mass of air", 0.287,#ra 55
+                            "R / mass of fuel gas", 0.0489086,#rf 56
                             
-                            "acomb:",0.42,
-                            "bcomb:",0.49,
-                            "am:",0.59,
-                            "bm:",0.21,
-                            "cm:",-0.96,
-                            "delta_m:",0.27,
+                            "acomb:",0.42,#acomb 57
+                            "bcomb:",0.49,#bcomb 58
+                            "am:",0.59,#am 59
+                            "bm:",0.21,#bm 60
+                            "cm:",-0.96,#cm 61
+                            "delta_m:",0.27,#delta_m 62
 
-                            "a_id:",0.39,
-                            "b_id:",0.105,
-                            "c_id:",3.12,
-                            "mWiebe:",0.1,
+                            "a_id:",0.39,#a_id 63
+                            "b_id:",0.105,#b_id 64
+                            "c_id:",3.12,#c_id 65
+                            "mWiebe:",0.1,#mWiebe 66
 
-                            "Air fuel ratio for reference point:",2.435696566131349,
-                            "ignition delay for reference point",1,
-                            "Mass at inlet valve closing for reference point [g]:",7462,
-                            "Engine speed for reference point [rpm]:",80,
-                            "Wiebe curve form coefficient for reference point:",0.1,
-                            "Combustion duration for reference point:",0.3667076110839844*60/(2*math.pi),
-                            "SMFR:",14500,
-                            "topen:",0.0005,
-                            "tclose",0.0005]
+                            "Air fuel ratio for reference point:",2.435696566131349,#lamb_ref 67
+                            "ignition delay for reference point",1,#phi_id_ref 68
+                            "Mass at inlet valve closing for reference point [g]:",7462,#m_ivc_ref 69
+                            "Engine speed for reference point [rpm]:",80,#N_re 70
+                            "Wiebe curve form coefficient for reference point:",0.1,#mWieberef 71
+                            "Combustion duration for reference point:",0.3667076110839844*60/(2*math.pi),#delta_phi_comb_ref 72
+                            "SMFR:",14500,#SMFR 73
+                            "topen:",0.0005,#topen 74
+                            "tclose",0.0005#tclose 75
+                            ]
         
         self.default = self.texts_values.copy()
         
@@ -494,53 +498,54 @@ class Notebook_MVEM_model(ttk.Frame):
 
         self.float_vars = []
 
-        self.texts_values= ["pressure air [bar]:", 1,
-                            "air Temperature [K]:", 11+273.15,
-                            "heat specific capacity ratio for air:",1.401114206,
-                            "heat specific capacity ratio for exhaust:", 1.375,
-                            "shaft efficiency:",0.99,
-                            "combustion efficiency:", 0.99,
-                            "turbine efficiency: ", 0.84,
-                            "compressor efficiency:", 0.8,
+        self.texts_values= ["pressure air [bar]:", 1,#p_a 76
+                            "air Temperature [K]:", 11+273.15,#T_a 77
+                            "heat specific capacity ratio for air:",1.401114206,#gamma_a 78
+                            "heat specific capacity ratio for exhaust:", 1.375,#gamma_e 79 
+                            "shaft efficiency:",0.99,#eta_sh 80 
+                            "combustion efficiency:", 0.99,#eta_comb 81 
+                            "turbine efficiency: ", 0.84,#eta_t 82
+                            "compressor efficiency:", 0.8,#eta_c 83
                             
-                            "pressure exhaust [bar]:",3.8,
-                            "temperature exhuast [K]:",643.15,
-                            "temperature inlet [K]:", 298.15,
-                            "pressure inlet [bar]:", 2.4,
+                            "pressure exhaust [bar]:",3.8,#p_ER_ini 84
+                            "temperature exhuast [K]:",643.15,#T_ER_ini 85
+                            "temperature inlet [K]:", 298.15,#T_IR_ini 86
+                            "pressure inlet [bar]:", 2.4,#p_IR_ini 87
                             
-                            "Air:",1.100,
-                            "Exhaust:", 1.006,
+                            "Air:",1.100,#cpe 88
+                            "Exhaust:", 1.006,#cpa 89
                             
-                            "k Air cooler:", 3.80*pow(10,-12),
-                            "k Air filter:", 0,
+                            "k Air cooler:", 3.80*pow(10,-12),#kpac 90
+                            "k Air filter:", 0,#kpaf 91
                             
-                            "cv for inlet:", 0.718,
-                            "cv for exhaust:", 0.8,
+                            "cv for inlet:", 0.718,#cvir 92
+                            "cv for exhaust:", 0.8,#cver 93
                             
-                            "Inlet receiver [l or dm^3]:", 20.000,
-                            "Exhaust receiver [l or dm^3]:",20.000,
+                            "Inlet receiver [l or dm^3]:", 20.000,#V_ir 94
+                            "Exhaust receiver [l or dm^3]:",20.000,#V_er 95
                             
-                            "kf0:",2.5645,
-                            "kf1:",-0.0532,
-                            "kf2:",0.0005,
+                            "kf0:",2.5645,#kf0 96
+                            "kf1:",-0.0532,#kf1 97 
+                            "kf2:",0.0005,#kf2 98
                             
-                            "k_ac0:",0.95,
-                            "k_ac1:",-5.00*pow(10,-6),
-                            "k_ac2:",7*pow(10,-11),
+                            "k_ac0:",0.95,#k_ac0 99
+                            "k_ac1:",-5.00*pow(10,-6),#k_ac1 100
+                            "k_ac2:",7*pow(10,-11),#k_ac2 101
 
-                            "diametre cylindre [m]:",0.92,
-                            "number of cylinders :",12,
+                            "diametre cylindre [m]:",0.92,#bore 102
+                            "number of cylinders :",12,#zc 103
                             
-                            "turbocharger inertia:",600,
-                            "engine intertia:",0,
-                            "shaft inertia:",0,
-                            "propeller inertia:",500000,
+                            "turbocharger inertia:",600,#ITC 104
+                            "engine intertia:",0,#I_e 105
+                            "shaft inertia:",0,#I_sh 106
+                            "propeller inertia:",500000,#I_p 107
 
-                            "coefficient discharge:",1,
-                            "Area:",1,
-                            "R_a:",287,
+                            "coefficient discharge:",1,#cd 108
+                            "Area:",1,#A_eq 109
+                            "R_a:",287,#R_a 110
                            
-                            "T:",32.32+273.15]
+                            "T:",32.32+273.15#T_w 111
+                            ]
         
         self.default = self.texts_values.copy()
         
@@ -690,59 +695,60 @@ class Notebook_Param_energy(ttk.Frame):
 
         self.float_vars = []
 
-        self.texts_values= ["Q_ab_max:", 100,
-                            "Q_ab_min",3,
-                            "Max power",30,
-                            "Lower heating value 1:", 100,
-                            "Lower heating value 2:", 0.0,
-                            "Lower heating value 3:", 0.0,
-                            "Lower heating value 4:",0.0 ,
-                            "Lower heating value 5:",0.0,
-                            "Maximum continuous rating 1:", 63840000,
-                            "Maximum continuous rating 2:", 0.0,
-                            "Maximum continuous rating 3:", 100,
-                            "Maximum continuous rating 4:",0.0 ,
-                            "Maximum continuous rating 5:",0.0,
+        self.texts_values= ["Q_ab_max:", 100,#Q_ab_max 112
+                            "Q_ab_min",3,#Q_ab_min 113
+                            "Max power",30,#Max_power 114
+                            "Lower heating value 1:", 100,#LHV1 115
+                            "Lower heating value 2:", 0.0,#LHV2 116
+                            "Lower heating value 3:", 0.0,#LHV3 117
+                            "Lower heating value 4:",0.0 ,#LHV4 118
+                            "Lower heating value 5:",0.0,#LHV5 119
+                            "Maximum continuous rating 1:", 63840000,#MCR1 120
+                            "Maximum continuous rating 2:", 0.0,#MCR2 121
+                            "Maximum continuous rating 3:", 100,#MCR3 122
+                            "Maximum continuous rating 4:",0.0 ,#MCR4 123
+                            "Maximum continuous rating 5:",0.0,#MCR5 124
 
-                            "an 1:", 1.0,
-                            "an 2:", 1.0,
-                            "an 3:", 1.0,
-                            "an 4:", 1.0,
-                            "an 5:", 1.0,
-                            "bn 1:", 1.0,
-                            "bn 2:", 1.0,
-                            "bn 3:", 1.0,
-                            "bn 4:", 1.0,
-                            "bn 5:", 1.0,
-                            "cn 1:", 1.0,
-                            "cn 2:", 1.0,
-                            "cn 3:", 1.0,
-                            "cn 4:", 1.0,
-                            "cn 5:", 1.0,
+                            "an 1:", 1.0,#an 125
+                            "an 2:", 1.0,#an2 126
+                            "an 3:", 1.0,#an3 127
+                            "an 4:", 1.0,#an4 128
+                            "an 5:", 1.0,#an5 129
+                            "bn 1:", 1.0,#bn 130
+                            "bn 2:", 1.0,#bn2 131
+                            "bn 3:", 1.0,#bn3 132
+                            "bn 4:", 1.0,#bn4 133
+                            "bn 5:", 1.0,#bn5 134
+                            "cn 1:", 1.0,#cn 135
+                            "cn 2:", 1.0,#cn2 136
+                            "cn 3:", 1.0,#cn3 137
+                            "cn 4:", 1.0,#cn4 138
+                            "cn 5:", 1.0,#cn5 139
+ 
+                            "Maximum power [W]:", 63840000,#PME1_max 140
+                            "Minimum power [W]:", 0.0,#PME1_min 141 
+                            "Efficience η1:",0.8 ,#nu1ME1 142
+                            "Efficience η2:",0.8,#nu2ME1 143
+                            "Efficience ηl:",0.8,#nuelME1 144
+ 
+                            "Maximum power [W]:", 1,#PME2_max 145
+                            "Minimum power [W]:", 0.0,#PME2_min 146
+                            "Efficience η1:",0.8 ,#nu1ME2 147
+                            "Efficience η2:",0.8,#nu2ME2 148
+                            "Efficience ηl:",0.8,#nuelME2 149
 
-                            "Maximum power [W]:", 63840000,
-                            "Minimum power [W]:", 0.0,
-                            "Efficience η1:",0.8 ,
-                            "Efficience η2:",0.8,
-                            "Efficience ηl:",0.8,
-
-                            "Maximum power [W]:", 1,
-                            "Minimum power [W]:", 0.0,
-                            "Efficience η1:",0.8 ,
-                            "Efficience η2:",0.8,
-                            "Efficience ηl:",0.8,
-
-                            "Maximum power [W]:", 1,
-                            "Minimum power [W]:", 0.0,
-                            "Efficience η1:",0.8 ,
-                            "Efficience η2:",0.8,
-                            "Efficience ηl:",0.8,
-
-                            "Maximum power [W]:", 1,
-                            "Minimum power [W]:", 0.0,
-                            "Efficience η1:",0.8 ,
-                            "Efficience η2:",0.8,
-                            "Efficience ηl:",0.8,]
+                            "Maximum power [W]:", 1,#PAE1_max 150
+                            "Minimum power [W]:", 0.0,#PAE1_min 151
+                            "Efficience η1:",0.8 ,#nu1AE1 152
+                            "Efficience η2:",0.8,#nu2AE1 153
+                            "Efficience ηl:",0.8,#nuelAE1 154
+ 
+                            "Maximum power [W]:", 1,#PAE2_max 155
+                            "Minimum power [W]:", 0.0,#PAE2_min 156
+                            "Efficience η1:",0.8 ,#nu1AE2 157
+                            "Efficience η2:",0.8,#nu2AE2 158
+                            "Efficience ηl:",0.8,#nuelAE2 159
+                            ]
         
         self.default = self.texts_values.copy()
         
