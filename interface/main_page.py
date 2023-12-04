@@ -48,7 +48,8 @@ class main_page(ttk.Frame):
 
         return self.values
     
-    
+   # def run_page(self):
+    #   Run_program()
     
 
 

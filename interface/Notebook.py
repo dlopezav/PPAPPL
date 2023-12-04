@@ -732,3 +732,6 @@ class Notebook_Param_energy(Notebook_page):
             self.labels[i].pack(side=LEFT, padx=5, pady=5)
             self.entrys[i].pack(side=LEFT, padx=5, pady=5)
             self.reset[i].pack(side=RIGHT, padx=5, pady=5)
+
+
+
