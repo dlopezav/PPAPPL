@@ -39,10 +39,21 @@ class main_page(ttk.Frame):
         self.pack_forget()
 
     def return_all_values(self):
-        for i in range(len(self.frames_notebook)):
-            self.values.extend(self.frames_notebook[i].return_values())
+        if(self.values==[]):
+            for i in range(len(self.frames_notebook)):
+                self.values.extend(self.frames_notebook[i].return_values())
+        else:
+            
+            self.values = []
+
+            for i in range(len(self.frames_notebook)):
+                self.values.extend(self.frames_notebook[i].return_values())
+
 
         return self.values
+    
+
+
         
         
 

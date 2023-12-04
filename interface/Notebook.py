@@ -9,17 +9,19 @@ from ttkbootstrap.scrolled import ScrolledFrame
 import pandas as pd
 import math
 
-
-
-class Notebook_Model_param(ttk.Frame):
+class Notebook_page(ttk.Frame):
     def __init__(self, tab_notebook):
         super().__init__(tab_notebook, style='cyborg')
 
         self.frames_systems = []
 
-        self.frames = []
+        self.Labelframes = []
 
-        self.Labelframes = [ttk.LabelFrame(self, bootstyle='info',text="MODEL")]
+        self.frames = []
+        
+        self.scrollframe = ScrolledFrame(self)
+
+        self.file_path= ""
 
         self.labels = []
 
@@ -30,6 +32,35 @@ class Notebook_Model_param(ttk.Frame):
         self.reset = []
 
         self.float_vars = []
+
+        self.texts_values= []
+
+    def browse_file(self):
+
+        self.file_path = filedialog.askopenfilename(filetypes=[("Excel files", "*.xlsx;*.xls")])
+        self.file_entry.config(state='normal')
+        self.file_entry.delete(0, tk.END)
+        self.file_entry.insert(0, self.file_path)
+        self.file_entry.config(state='readonly')
+
+    def return_values(self):
+
+        return  [var.get() for var in self.float_vars]
+    
+    def setDefaultVal(self, i):
+        self.entrys[i].delete(0, tk.END)
+        self.entrys[i].insert(0, self.default[i*2+1])
+
+
+
+
+
+
+class Notebook_Model_param(Notebook_page):
+    def __init__(self,tab_notebook):
+        super().__init__(tab_notebook)
+
+        self.Labelframes = [ttk.LabelFrame(self, bootstyle='info',text="MODEL")]
 
         self.texts_values= ["time_t:", 0, #time_t 0 
                             "total_time:", 0.005 , #total_time 1
@@ -73,41 +104,20 @@ class Notebook_Model_param(ttk.Frame):
             self.entrys[i].pack(side=LEFT, padx=5, pady=5)
             self.reset[i].pack(side=RIGHT, padx=5, pady=5)
 
-    def return_values(self):
-
         self.float_vars.append(tk.DoubleVar(value = int(self.float_vars[1].get() // self.float_vars[2].get() + 1)))# N_cycle 8
-        return  [var.get() for var in self.float_vars]
     
-    def setDefaultVal(self, i):
-        self.entrys[i].delete(0, tk.END)
-        self.entrys[i].insert(0, self.default[i*2+1])
+    
     
 
 
 ################ First system propeller ################################
 
-class Notebook_propeller(ttk.Frame):
+class Notebook_propeller(Notebook_page):
     def __init__(self, tab_notebook):
-        super().__init__(tab_notebook, style='cyborg')
-        
-        self.scrollframe = ScrolledFrame(self)
-    
-        self.frames_systems = []
-
-        self.frames = []
+        super().__init__(tab_notebook)
 
         self.Labelframes = [ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Constants"),
                             ttk.LabelFrame(self.scrollframe, bootstyle='info',text="To be determined")]
-
-        self.labels = []
-
-        self.entrys = []
-
-        self.texts = []
-
-        self.float_vars = []
-
-        self.reset = []
 
         self.texts_values =["Ship displacement volume [m3]:", 112404,# sh_displ 9
                             "Density of sea water [kg/m^3]:", 1026,# rho_sw 10
@@ -145,10 +155,10 @@ class Notebook_propeller(ttk.Frame):
 
 
         # Wageningen
-        self.wageningen_frame = ttk.Frame(self.scrollframe)
-        self.wageningen_label = ttk.Label(self.wageningen_frame, text="Wageningen coefficients imports:")
-        self.wageningen_file_entry = ttk.Entry(self.wageningen_frame, state='readonly')
-        self.browse_button = ttk.Button(self.wageningen_frame, text="Browse", command=self.browse_wageningen_file, style='info')
+        self.file_frame = ttk.Frame(self.scrollframe)
+        self.file_label = ttk.Label(self.file_frame, text="Wageningen coefficients imports:")
+        self.file_entry = ttk.Entry(self.file_frame, state='readonly')
+        self.file_button = ttk.Button(self.file_frame, text="Browse", command=self.browse_file, style='info')
         
         self.pack(fill=BOTH, expand=YES)
         self.scrollframe.pack(fill=BOTH, expand=YES)   
@@ -164,45 +174,31 @@ class Notebook_propeller(ttk.Frame):
 
 
         # Position wageningen frame and label
-        self.wageningen_frame.pack(side=TOP, pady=5)
-        self.wageningen_label.pack(side=TOP, padx=5)
-        self.browse_button.pack(side=LEFT, padx=5)
-        self.wageningen_file_entry.pack(side=LEFT, padx=5)
+        self.file_frame.pack(side=TOP, pady=5)
+        self.file_label.pack(side=TOP, padx=5)
+        self.file_button.pack(side=LEFT, padx=5)
+        self.file_entry.pack(side=LEFT, padx=5)
+        self.count=FALSE
 
+        if (self.file_path!="" and count==FALSE):
+            df = pd.read_excel(self.file_path)
 
-    def browse_wageningen_file(self):
+            self.float_vars.append(tk.DoubleVar(value=float(df['n1'].iloc[0])))#n1_nump 19
+            self.float_vars.append(tk.DoubleVar(value=float(df['ct'].iloc[0])))#ct_nump 20
+            self.float_vars.append(tk.DoubleVar(value=float(df['s'].iloc[0])))#s1_nump 21
+            self.float_vars.append(tk.DoubleVar(value=float(df['t'].iloc[0])))#t1_nump 22 
+            self.float_vars.append(tk.DoubleVar(value=float(df['u'].iloc[0])))#u1_nump 23
+            self.float_vars.append(tk.DoubleVar(value=float(df['v'].iloc[0])))#v1_nump 24
 
-        self.file_path = filedialog.askopenfilename(filetypes=[("Excel files", "*.xlsx;*.xls")])
-        self.wageningen_file_entry.config(state='normal')
-        self.wageningen_file_entry.delete(0, tk.END)
-        self.wageningen_file_entry.insert(0, self.file_path)
-        self.wageningen_file_entry.config(state='readonly')
+            self.float_vars.append(tk.DoubleVar(value=float(df['n2'].iloc[0])))#n2_nump 25
+            self.float_vars.append(tk.DoubleVar(value=float(df['cq'].iloc[0])))#cq_nump 26
+            self.float_vars.append(tk.DoubleVar(value=float(df['s2'].iloc[0])))#s2_nump 27 
+            self.float_vars.append(tk.DoubleVar(value=float(df['t2'].iloc[0])))#t2_nump 28
+            self.float_vars.append(tk.DoubleVar(value=float(df['u2'].iloc[0])))#u2_nump 29
+            self.float_vars.append(tk.DoubleVar(value=float(df['v2'].iloc[0])))#v2_nump 30
 
-    def setDefaultVal(self, i):
-        self.entrys[i].delete(0, tk.END)
-        self.entrys[i].insert(0, self.default[i*2+1])
-
-  
-    def return_values(self):
-        df = pd.read_excel(self.file_path)
-
-        self.float_vars.append(tk.DoubleVar(value=float(df['n1'].iloc[0])))#n1_nump 19
-        self.float_vars.append(tk.DoubleVar(value=float(df['ct'].iloc[0])))#ct_nump 20
-        self.float_vars.append(tk.DoubleVar(value=float(df['s'].iloc[0])))#s1_nump 21
-        self.float_vars.append(tk.DoubleVar(value=float(df['t'].iloc[0])))#t1_nump 22 
-        self.float_vars.append(tk.DoubleVar(value=float(df['u'].iloc[0])))#u1_nump 23
-        self.float_vars.append(tk.DoubleVar(value=float(df['v'].iloc[0])))#v1_nump 24
-
-        self.float_vars.append(tk.DoubleVar(value=float(df['n2'].iloc[0])))#n2_nump 25
-        self.float_vars.append(tk.DoubleVar(value=float(df['cq'].iloc[0])))#cq_nump 26
-        self.float_vars.append(tk.DoubleVar(value=float(df['s2'].iloc[0])))#s2_nump 27 
-        self.float_vars.append(tk.DoubleVar(value=float(df['t2'].iloc[0])))#t2_nump 28
-        self.float_vars.append(tk.DoubleVar(value=float(df['u2'].iloc[0])))#u2_nump 29
-        self.float_vars.append(tk.DoubleVar(value=float(df['v2'].iloc[0])))#v2_nump 30
-
-        self.float_vars.append(tk.DoubleVar(value=float(self.float_vars[0].get() * self.float_vars[1].get())))#m_hydro 31
-
-        return [var.get() for var in self.float_vars]
+            self.float_vars.append(tk.DoubleVar(value=float(self.float_vars[0].get() * self.float_vars[1].get())))#m_hydro 31
+            self.count=TRUE
 
     
 
@@ -210,26 +206,12 @@ class Notebook_propeller(ttk.Frame):
 
 ################## Second system PID controller #########################################
 
-class Notebook_PIDcontroller(ttk.Frame):
+class Notebook_PIDcontroller(Notebook_page):
     def __init__(self, tab_notebook):
-        super().__init__(tab_notebook, style='cyborg')
-    
-        self.frames_systems = []
-
-        self.frames = []
+        super().__init__(tab_notebook)
 
         self.Labelframes = [ttk.LabelFrame(self, bootstyle='info',text="Constants"),
                             ttk.LabelFrame(self, bootstyle='info',text="To be determined")]
-
-        self.labels = []
-
-        self.entrys = []
-
-        self.texts = []
-
-        self.float_vars = []
-
-        self.reset = []
 
         self.texts_values =["Number of engine cylinders:", 12, #zc 32
                             "Constant for PID controller	kp:", 0.003, #kp 33
@@ -263,10 +245,10 @@ class Notebook_PIDcontroller(ttk.Frame):
 
 
         # Steadystate
-        self.steadystate_frame = ttk.Frame(self)
-        self.steadystate_label = ttk.Label(self.steadystate_frame, text="Steadystate imports:")
-        self.steadystate_file_entry = ttk.Entry(self.steadystate_frame, state='readonly')
-        self.browse_button = ttk.Button(self.steadystate_frame, text="Browse", command=self.browse_steadystate_file, style='info')
+        self.file_frame = ttk.Frame(self)
+        self.file_label = ttk.Label(self.file_frame, text="Steadystate imports:")
+        self.file_entry = ttk.Entry(self.file_frame, state='readonly')
+        self.file_button = ttk.Button(self.file_frame, text="Browse", command=self.browse_file, style='info')
         
         self.pack(fill=BOTH, expand=YES)   
         self.Labelframes[0].pack(fill=BOTH, pady=10, padx=20)
@@ -281,34 +263,20 @@ class Notebook_PIDcontroller(ttk.Frame):
                 
 
         # Position steadystate frame and label
-        self.steadystate_frame.pack(side=TOP, pady=5)
-        self.steadystate_label.pack(side=TOP, padx=5)
-        self.browse_button.pack(side=LEFT, padx=5)
-        self.steadystate_file_entry.pack(side=LEFT, padx=5)
-
-
-    def browse_steadystate_file(self):
-
-        self.file_path = filedialog.askopenfilename(filetypes=[("Excel files", "*.xlsx;*.xls")])
-        self.steadystate_file_entry.config(state='normal')
-        self.steadystate_file_entry.delete(0, tk.END)
-        self.steadystate_file_entry.insert(0, self.file_path)
-        self.steadystate_file_entry.config(state='readonly')
-
-        
-
+        self.file_frame.pack(side=TOP, pady=5)
+        self.file_label.pack(side=TOP, padx=5)
+        self.file_button.pack(side=LEFT, padx=5)
+        self.file_entry.pack(side=LEFT, padx=5)
+        self.count = FALSE
   
-    def return_values(self):
+        if (self.file_path!="" and self.count == FALSE):
 
-        steadystate = pd.read_excel(self.file_path)
-        me_ne_value = steadystate['me_ne'].iloc[0]
-        calculated_value = 2 * math.pi / 60 * me_ne_value
-        self.float_vars.append(tk.DoubleVar(value=float(calculated_value))) #Nord 37
-        return [var.get() for var in self.float_vars]
+            steadystate = pd.read_excel(self.file_path)
+            me_ne_value = steadystate['me_ne'].iloc[0]
+            calculated_value = 2 * math.pi / 60 * me_ne_value
+            self.float_vars.append(tk.DoubleVar(value=float(calculated_value))) #Nord 37
+            self.count = TRUE
 
-    def setDefaultVal(self, i):
-        self.entrys[i].delete(0, tk.END)
-        self.entrys[i].insert(0, self.default[i*2+1])
 
 ########### END SECOND SYSTEM #############################################################
 
@@ -316,15 +284,10 @@ class Notebook_PIDcontroller(ttk.Frame):
 
 ############## Third system 0d cycle begin ################################################
 
-class Notebook_0dCycle(ttk.Frame):
+class Notebook_0dCycle(Notebook_page):
     def __init__(self, tab_notebook):
-        super().__init__(tab_notebook, style='cyborg')
-    
-        self.scrollframe = ScrolledFrame(self)
+        super().__init__(tab_notebook)
 
-        self.frames_systems = []
-
-        self.frames = []
 
         self.Labelframes = [ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Constants"),
                             ttk.LabelFrame(self.scrollframe, bootstyle='info',text="To be confirmed"),
@@ -332,15 +295,6 @@ class Notebook_0dCycle(ttk.Frame):
                             ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Parameters combustion p167"),
                             ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Engine reference point")]
 
-        self.labels = []
-
-        self.entrys = []
-
-        self.texts = []
-
-        self.float_vars = []
-
-        self.reset = []
 
         self.texts_values= ["Delta t:", 0.0001,#deltat 38
                             "Number of revolution per cycle:", 1,#rev_cy 39
@@ -447,14 +401,6 @@ class Notebook_0dCycle(ttk.Frame):
             self.entrys[i].pack(side=LEFT, padx=5, pady=5)
             self.reset[i].pack(side=RIGHT, padx=5, pady=5)
 
-    def return_values(self):
-        
-        return  [var.get() for var in self.float_vars]
-    
-    def setDefaultVal(self, i):
-        self.entrys[i].delete(0, tk.END)
-        self.entrys[i].insert(0, self.default[i*2+1])
-
 
 ########### END THIRD SYSTEM #############################################################
 
@@ -465,17 +411,9 @@ class Notebook_0dCycle(ttk.Frame):
 
 
     
-class Notebook_MVEM_model(ttk.Frame):
+class Notebook_MVEM_model(Notebook_page):
     def __init__(self, tab_notebook):
-        super().__init__(tab_notebook, style='cyborg')
-    
-        self.scrollframe = ScrolledFrame(self)
-
-        self.frames_systems = []
-
-        self.frames = []
-
-        self.reset = []
+        super().__init__(tab_notebook)
 
         self.Labelframes = [ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Constants"),
                             ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Initial pressures and temperatures"),
@@ -490,13 +428,6 @@ class Notebook_MVEM_model(ttk.Frame):
                             ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Mass calculations"),
                             ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Temperature of the air cooler coolant medium [K]")]
 
-        self.labels = []
-
-        self.entrys = []
-
-        self.texts = []
-
-        self.float_vars = []
 
         self.texts_values= ["pressure air [bar]:", 1,#p_a 76
                             "air Temperature [K]:", 11+273.15,#T_a 77
@@ -656,29 +587,14 @@ class Notebook_MVEM_model(ttk.Frame):
             self.entrys[i].pack(side=LEFT, padx=5, pady=5)
             self.reset[i].pack(side=RIGHT, padx=5, pady=5)
 
-    def return_values(self):
-
-        return  [var.get() for var in self.float_vars]
-    
-    def setDefaultVal(self, i):
-        self.entrys[i].delete(0, tk.END)
-        self.entrys[i].insert(0, self.default[i*2+1])
     
 ############################# END MVEM SYSTEM #############################################################
 
 ############################ PARAM Optimisation energy demand BEGIN ################################################
 
-class Notebook_Param_energy(ttk.Frame):
+class Notebook_Param_energy(Notebook_page):
     def __init__(self, tab_notebook):
-        super().__init__(tab_notebook, style='cyborg')
-    
-        self.scrollframe = ScrolledFrame(self)
-
-        self.frames_systems = []
-
-        self.frames = []
-
-        self.reset = []
+        super().__init__(tab_notebook)
 
         self.Labelframes = [ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Constants"),
                             ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Coefficients for fonction for fuel cons"),
@@ -686,14 +602,6 @@ class Notebook_Param_energy(ttk.Frame):
                             ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Main Engine 2"),
                             ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Auxiliary Engine 1"),
                             ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Auxiliary Engine 2")]
-
-        self.labels = []
-
-        self.entrys = []
-
-        self.texts = []
-
-        self.float_vars = []
 
         self.texts_values= ["Q_ab_max:", 100,#Q_ab_max 112
                             "Q_ab_min",3,#Q_ab_min 113
@@ -818,12 +726,3 @@ class Notebook_Param_energy(ttk.Frame):
             self.labels[i].pack(side=LEFT, padx=5, pady=5)
             self.entrys[i].pack(side=LEFT, padx=5, pady=5)
             self.reset[i].pack(side=RIGHT, padx=5, pady=5)
-
-    def return_values(self):
-
-
-        return  [var.get() for var in self.float_vars]
-    
-    def setDefaultVal(self, i):
-        self.entrys[i].delete(0, tk.END)
-        self.entrys[i].insert(0, self.default[i*2+1])
