@@ -5,6 +5,7 @@ from ttkbootstrap.scrolled import ScrolledFrame
 import pandas as pd
 import math
 from Notebook import *
+#from running import *
 
 class main_page(ttk.Frame):
     def __init__(self, frameprincipal):
@@ -39,18 +40,15 @@ class main_page(ttk.Frame):
         self.pack_forget()
 
     def return_all_values(self):
-        if(self.values==[]):
-            for i in range(len(self.frames_notebook)):
-                self.values.extend(self.frames_notebook[i].return_values())
-        else:
-            
-            self.values = []
 
-            for i in range(len(self.frames_notebook)):
-                self.values.extend(self.frames_notebook[i].return_values())
+        self.values = []
 
+        for i in range(len(self.frames_notebook)):
+            self.values.extend(self.frames_notebook[i].return_values())
 
         return self.values
+    
+    
     
 
 

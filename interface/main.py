@@ -21,6 +21,7 @@ class MainProgram(ttk.Frame):
         self.pages = [main_page(self),isystem01(self),isystem02(self),isystem03(self),isystem04(self),isystem05(self)]
         self.actual_page = 0
         self.show_pages(0)
+        self.values = []
 
     def show_pages(self, page):
         self.pages[self.actual_page].unshow()
@@ -29,8 +30,9 @@ class MainProgram(ttk.Frame):
         frame.show()
     
     def show_values(self):
-        t = self.pages[0].return_all_values()
-        print(t)
+        self.values = self.pages[0].return_all_values()
+        print(self.values)
+
 
 
 class DowBar(ttk.Frame):

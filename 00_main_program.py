@@ -116,7 +116,7 @@ omega = 0.3
 
 import pandas as pd
 
-df = pd.read_excel (r'C:/Users/hbusson/Documents/TNTM/PythonScripts/specific ship code/champs_elysees/wageningen.xlsx')
+df = pd.read_excel (r'C:/Users/hugoc/OneDrive/Área de Trabalho/PAPPL/PPAPP/wageningen.xlsx')
 
 
 n1_nump = df['n1'].to_numpy()
@@ -160,7 +160,7 @@ xr_o=0.01427586	 #original injeciton time (at the beginning of the simulation)	0
 #
 
 
-steadystate= pd.read_excel(r'C:/Users/hbusson/Documents/TNTM/ship data/champs_elysees/steady_state1.xlsx')
+steadystate= pd.read_excel(r'C:/Users/hugoc/OneDrive/Área de Trabalho/PAPPL/PPAPPL/steady_state1.xlsx')
 
 #order of speed 
 
