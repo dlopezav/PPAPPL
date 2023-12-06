@@ -38,19 +38,43 @@ class Notebook_page(ttk.Frame):
 
         self.texts_values= []
 
-    def browse_file(self):
+        self.files = []
+
+        self.file_entry = []
+
+    def browse_file(self, number):
 
         self.file_path = filedialog.askopenfilename(initialdir="../",
                                                     filetypes=[("Excel files", ".xlsx .xls")],
                                                     title="Choose a file.")
-        self.file_entry.config(state='normal')
-        self.file_entry.delete(0, tk.END)
-        self.file_entry.insert(0, self.file_path)
-        self.file_entry.config(state='readonly')
+
+        self.file_entry[number].config(state='normal')
+        self.file_entry[number].delete(0, tk.END)
+        self.file_entry[number].insert(0, self.file_path)
+        self.file_entry[number].config(state='readonly')
+        self.files.insert(number, self.file_path)
+    
+    def browse_dir(self, number):
+        self.dir_path = filedialog.askdirectory(initialdir="../",
+                                                title="Choose a directory.")
+        self.file_entry[number].config(state='normal')
+        self.file_entry[number].delete(0, tk.END)
+        self.file_entry[number].insert(0, self.dir_path)
+        self.file_entry[number].config(state='readonly')
+        self.files.insert(number, self.dir_path)
+
+
+    
+        
+
+
 
     def return_values(self):
 
-        return  [var.get() for var in self.float_vars]
+        if len(self.files)>2:
+            return self.files
+        else:
+            return  [var.get() for var in self.float_vars]
     
     def setDefaultVal(self, i):
         self.entrys[i].delete(0, tk.END)
@@ -162,8 +186,8 @@ class Notebook_propeller(Notebook_page):
         # Wageningen
         self.file_frame = ttk.Frame(self.scrollframe)
         self.file_label = ttk.Label(self.file_frame, text="Wageningen coefficients imports:")
-        self.file_entry = ttk.Entry(self.file_frame, state='readonly')
-        self.file_button = ttk.Button(self.file_frame, text="Browse", command=self.browse_file, style='info')
+        self.file_entry.append(ttk.Entry(self.file_frame, state='readonly'))
+        self.file_button = ttk.Button(self.file_frame, text="Browse", command=lambda : self.browse_file(0), style='info')
         
         self.pack(fill=BOTH, expand=YES)
         self.scrollframe.pack(fill=BOTH, expand=YES)   
@@ -182,7 +206,7 @@ class Notebook_propeller(Notebook_page):
         self.file_frame.pack(side=TOP, pady=5)
         self.file_label.pack(side=TOP, padx=5)
         self.file_button.pack(side=LEFT, padx=5)
-        self.file_entry.pack(side=LEFT, padx=5)
+        self.file_entry[0].pack(side=LEFT, padx=5)
         self.count=FALSE
 
         if (self.file_path!="" and count==FALSE):
@@ -252,8 +276,8 @@ class Notebook_PIDcontroller(Notebook_page):
         # Steadystate
         self.file_frame = ttk.Frame(self)
         self.file_label = ttk.Label(self.file_frame, text="Steadystate imports:")
-        self.file_entry = ttk.Entry(self.file_frame, state='readonly')
-        self.file_button = ttk.Button(self.file_frame, text="Browse", command=self.browse_file, style='info')
+        self.file_entry.append(ttk.Entry(self.file_frame, state='readonly'))
+        self.file_button = ttk.Button(self.file_frame, text="Browse", command=lambda :self.browse_file(0), style='info')
         
         self.pack(fill=BOTH, expand=YES)   
         self.Labelframes[0].pack(fill=BOTH, pady=10, padx=20)
@@ -271,7 +295,7 @@ class Notebook_PIDcontroller(Notebook_page):
         self.file_frame.pack(side=TOP, pady=5)
         self.file_label.pack(side=TOP, padx=5)
         self.file_button.pack(side=LEFT, padx=5)
-        self.file_entry.pack(side=LEFT, padx=5)
+        self.file_entry[0].pack(side=LEFT, padx=5)
         self.count = FALSE
 
   
@@ -733,5 +757,55 @@ class Notebook_Param_energy(Notebook_page):
             self.entrys[i].pack(side=LEFT, padx=5, pady=5)
             self.reset[i].pack(side=RIGHT, padx=5, pady=5)
 
+###################################### EXCEL SHEETS #####################################################
+
+class Notebook_excell_sheets(Notebook_page):
+    def __init__(self, tab_notebook):
+        super().__init__(tab_notebook)
+
+        self.Labelframes = [ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Steady states engines 25,30...70"),
+                            ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Others (excel_files)")]
+
+        self.texts_values =["Choose folder for steady_states_engines_xx sheets",
+                            "CHOOSE DIRECTORY TO SAVE PLOTS:", 
+                            
+
+                            "Results: ",  
+                            "TC_maps2:", 
+                            "Wageningen_reynolds:",
+                            "KT:", 
+                            "KQ:", 
+                            "steady_states:",
+                            ]
+        
+        
+        self.buttons = []
+        
+        for count, text in enumerate(self.texts_values):
+            if count<2:
+                self.frames.append(ttk.Frame(self.Labelframes[0]))
+                self.labels.append(ttk.Label(self.frames[count], text=text))
+                self.file_entry.append(ttk.Entry(self.frames[count], state='readonly'))
+                self.buttons.append(ttk.Button(self.frames[count], text="Browse", command=lambda c=count: self.browse_dir(c), style='info'))
+            else:
+                self.frames.append(ttk.Frame(self.Labelframes[1]))
+                self.labels.append(ttk.Label(self.frames[count], text=text))
+                self.file_entry.append(ttk.Entry(self.frames[count], state='readonly'))
+                self.buttons.append(ttk.Button(self.frames[count], text="Browse", command=lambda c=count: self.browse_file(c), style='info'))
+                
+
+        
+        self.pack(fill=BOTH, expand=YES)  
+        self.scrollframe.pack(fill=BOTH,expand=YES)
+        self.Labelframes[0].pack(fill=BOTH, pady=10, padx=20)
+        self.Labelframes[1].pack(fill=BOTH, pady=10, padx=20)
+        self.update_idletasks()
+
+        for i in range(len(self.labels)):
+            self.frames[i].pack(side=TOP, anchor='w')
+            self.labels[i].pack(side=LEFT, padx=5, pady=5)
+            self.file_entry[i].pack(side=LEFT, padx=5, pady=5)
+            self.buttons[i].pack(side=LEFT, padx=5)
 
 
+        
