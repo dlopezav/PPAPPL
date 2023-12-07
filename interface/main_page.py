@@ -21,7 +21,8 @@ class main_page(ttk.Frame):
 
         self.notebook = ttk.Notebook(self, bootstyle="info")
 
-        self.frames_notebook = [Notebook_Model_param(self.notebook),Notebook_propeller(self.notebook),
+        self.frames_notebook = [Notebook_Model_param(self.notebook),
+                                Notebook_propeller(self.notebook),
                                 Notebook_PIDcontroller(self.notebook),
                                 Notebook_0dCycle(self.notebook),Notebook_MVEM_model(self.notebook),
                                 Notebook_Param_energy(self.notebook),Notebook_excell_sheets(self.notebook)]

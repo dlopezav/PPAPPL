@@ -767,7 +767,7 @@ class Notebook_excell_sheets(Notebook_page):
                             ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Others (excel_files)")]
 
         self.texts_values =["Choose folder for steady_states_engines_xx sheets",
-                            "CHOOSE DIRECTORY TO SAVE PLOTS:", 
+                            "Choose directory to save plots:", 
                             
 
                             "Results: ",  
