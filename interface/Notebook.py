@@ -65,24 +65,7 @@ class Notebook_page(ttk.Frame):
         self.files.insert(number, self.dir_path)
 
 
-    def sauvegarder_dans_excel(self):
-        # Création d'un classeur Excel
-        nombre_archivo = filedialog.asksaveasfilename(defaultextension=".xlsx",
-                                                     filetypes=[("Excel Files", "*.xlsx")])
-        if nombre_archivo:  # Si el usuario selecciona un archivo  
-            
-            wb = openpyxl.Workbook()
-            sheet = wb.active
-            sheet.title = "Datos"
-
-            for i, value in enumerate(self.float_vars):
-                sheet.cell(row=i + 1, column=2, value=value.get())
-
-            for i, text in enumerate(self.texts):
-                sheet.cell(row=i + 1, column=1, value=text)
-
-            wb.save(nombre_archivo)
-            print(f"Données sauvegardées à : {nombre_archivo}")
+    
         
 
 
@@ -134,9 +117,7 @@ class Notebook_Model_param(Notebook_page):
                 self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
                 self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
 
-        self.frame = ttk.Frame(self, style='secondary')
-        self.sauvegarde = ttk.Button(self.frame, command=lambda : self.sauvegarder_dans_excel(), style='success.Solid.TButton', text='sauvegarder',width=35) 
-        self.recuperer = ttk.Button(self.frame, style='danger.Solid.TButton', text='recuperer', width=35)
+        
         
                 
         
@@ -154,9 +135,7 @@ class Notebook_Model_param(Notebook_page):
             self.reset[i].pack(side=RIGHT, padx=5, pady=5)
         
 
-        self.frame.pack(side=BOTTOM)
-        self.recuperer.pack(side=LEFT)
-        self.sauvegarde.pack(side=LEFT)
+        
 
         self.float_vars.append(tk.DoubleVar(value = int(self.float_vars[1].get() // self.float_vars[2].get() + 1)))# N_cycle 8
     
@@ -206,10 +185,7 @@ class Notebook_propeller(Notebook_page):
                 self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
                 self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda  count=count: self.setDefaultVal(count), style='danger-link'))
 
-        self.frame = ttk.Frame(self, style='secondary')
-        self.sauvegarde = ttk.Button(self.frame, command=lambda : self.sauvegarder_dans_excel(), style='success.Solid.TButton', text='sauvegarder',width=35) 
-        self.recuperer = ttk.Button(self.frame, style='danger.Solid.TButton', text='recuperer', width=35)
-
+        
         # Wageningen
         self.file_frame = ttk.Frame(self.scrollframe)
         self.file_label = ttk.Label(self.file_frame, text="Wageningen coefficients imports:")
@@ -228,10 +204,7 @@ class Notebook_propeller(Notebook_page):
             self.entrys[i].pack(side=LEFT, padx=5, pady=5)
             self.reset[i].pack(side=RIGHT, padx=5, pady=5)
 
-        self.frame.pack(side=BOTTOM)
-        self.recuperer.pack(side=LEFT)
-        self.sauvegarde.pack(side=LEFT)
-
+        
         # Position wageningen frame and label
         self.file_frame.pack(side=TOP, pady=5)
         self.file_label.pack(side=TOP, padx=5)
@@ -304,9 +277,7 @@ class Notebook_PIDcontroller(Notebook_page):
                 self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
 
 
-        self.frame = ttk.Frame(self, style='secondary')
-        self.sauvegarde = ttk.Button(self.frame, command=lambda : self.sauvegarder_dans_excel(), style='success.Solid.TButton', text='sauvegarder',width=35) 
-        self.recuperer = ttk.Button(self.frame, style='danger.Solid.TButton', text='recuperer', width=35)
+        
         # Steadystate
         self.file_frame = ttk.Frame(self)
         self.file_label = ttk.Label(self.file_frame, text="Steadystate imports:")
@@ -324,9 +295,7 @@ class Notebook_PIDcontroller(Notebook_page):
             self.entrys[i].pack(side=LEFT, padx=5, pady=5)
             self.reset[i].pack(side=RIGHT, padx=5, pady=5)
                 
-        self.frame.pack(side=BOTTOM)
-        self.recuperer.pack(side=LEFT)
-        self.sauvegarde.pack(side=LEFT)
+        
 
         # Position steadystate frame and label
         self.file_frame.pack(side=TOP, pady=5)
@@ -454,9 +423,7 @@ class Notebook_0dCycle(Notebook_page):
                             self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
 
                 
-        self.frame = ttk.Frame(self, style='secondary')
-        self.sauvegarde = ttk.Button(self.frame, command=lambda : self.sauvegarder_dans_excel(), style='success.Solid.TButton', text='sauvegarder',width=35) 
-        self.recuperer = ttk.Button(self.frame, style='danger.Solid.TButton', text='recuperer', width=35)
+        
 
         self.pack(fill=BOTH, expand=YES)
         self.scrollframe.pack(fill=BOTH,expand=YES)
@@ -466,9 +433,6 @@ class Notebook_0dCycle(Notebook_page):
 
         self.update_idletasks()
 
-        self.frame.pack(side=BOTTOM)
-        self.recuperer.pack(side=LEFT)
-        self.sauvegarde.pack(side=LEFT)
 
         for i in range(len(self.labels)):
             self.frames[i].pack(side=TOP, anchor='w')
@@ -647,9 +611,7 @@ class Notebook_MVEM_model(Notebook_page):
                                                         self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
 
                                     
-        self.frame = ttk.Frame(self, style='secondary')
-        self.sauvegarde = ttk.Button(self.frame, command=lambda : self.sauvegarder_dans_excel(), style='success.Solid.TButton', text='sauvegarder',width=35) 
-        self.recuperer = ttk.Button(self.frame, style='danger.Solid.TButton', text='recuperer', width=35)
+        
 
         self.pack(fill=BOTH, expand=YES)
         self.scrollframe.pack(fill=BOTH,expand=YES)
@@ -665,9 +627,7 @@ class Notebook_MVEM_model(Notebook_page):
             self.entrys[i].pack(side=LEFT, padx=5, pady=5)
             self.reset[i].pack(side=RIGHT, padx=5, pady=5)
         
-        self.frame.pack(side=BOTTOM)
-        self.recuperer.pack(side=LEFT)
-        self.sauvegarde.pack(side=LEFT)
+        
 
     
 ############################# END MVEM SYSTEM #############################################################
@@ -795,10 +755,8 @@ class Notebook_Param_energy(Notebook_page):
                                 self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
 
                 
-        self.frame = ttk.Frame(self, style='secondary')
-        self.sauvegarde = ttk.Button(self.frame, command=lambda : self.sauvegarder_dans_excel(), style='success.Solid.TButton', text='sauvegarder',width=35) 
-        self.recuperer = ttk.Button(self.frame, style='danger.Solid.TButton', text='recuperer', width=35)
-        
+       
+
         self.pack(fill=BOTH, expand=YES)
         self.scrollframe.pack(fill=BOTH,expand=YES)
 
@@ -813,9 +771,7 @@ class Notebook_Param_energy(Notebook_page):
             self.entrys[i].pack(side=LEFT, padx=5, pady=5)
             self.reset[i].pack(side=RIGHT, padx=5, pady=5)
         
-        self.frame.pack(side=BOTTOM)
-        self.recuperer.pack(side=LEFT)
-        self.sauvegarde.pack(side=LEFT)
+        
 
 ###################################### EXCEL SHEETS #####################################################
 
