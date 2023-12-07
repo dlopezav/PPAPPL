@@ -37,6 +37,7 @@ class main_page(ttk.Frame):
         self.update_idletasks()
 
 
+
     def unshow(self):
         self.pack_forget()
 
@@ -53,6 +54,11 @@ class main_page(ttk.Frame):
 
         return self.frames_notebook[6].return_values()
     
+    def save(self):
+        self.pack(fill=BOTH, expand=YES)
+        self.titre.pack(fill=X, pady=10, padx=20)
+        self.notebook.pack(fill=BOTH,expand=YES)
+        self.update_idletasks()
    # def run_page(self):
     #   Run_program()
     
