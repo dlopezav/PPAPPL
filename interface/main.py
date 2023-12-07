@@ -16,10 +16,13 @@ class MainProgram(ttk.Frame):
         super().__init__(master_window)
         self.pack(fill=BOTH, expand=YES)
         NavBar(self)
-        DowBar(self)
+        self.db = DowBar(self)
         
         self.pages = [main_page(self),isystem01(self),isystem02(self),isystem03(self),isystem04(self),isystem05(self)]
         self.actual_page = 0
+        if(self.actual_page != 0):
+            self.db.show()
+
         self.show_pages(0)
         self.values = []
 
@@ -27,6 +30,10 @@ class MainProgram(ttk.Frame):
         self.pages[self.actual_page].unshow()
         self.actual_page = page
         frame = self.pages[self.actual_page]
+        if(page != 0):
+            self.db.show()
+        else:
+            self.db.unshow()
         frame.show()
     
     def show_values(self):
@@ -39,7 +46,6 @@ class MainProgram(ttk.Frame):
 class DowBar(ttk.Frame):
     def __init__(self, frameprincipal):
         super().__init__(frameprincipal, style='secondary')
-        self.pack(side=BOTTOM, fill=BOTH)
         
         frame = ttk.Frame(self, style='secondary')
         frame.pack()
@@ -53,6 +59,13 @@ class DowBar(ttk.Frame):
         
         executer = ttk.Button(frame, style='primary.Solid.TButton', text='executer', width=35, command=lambda: frameprincipal.show_values())
         executer.pack(side=LEFT)
+
+    def show(self):
+        self.pack(side=BOTTOM, fill=BOTH)
+        
+
+    def unshow(self):
+        self.pack_forget()
 
 
 

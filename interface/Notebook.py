@@ -117,7 +117,10 @@ class Notebook_Model_param(Notebook_page):
                 self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
                 self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
 
-
+        self.frame = ttk.Frame(self, style='secondary')
+        self.sauvegarde = ttk.Button(self.frame, style='success.Solid.TButton', text='sauvegarder',width=35) 
+        self.recuperer = ttk.Button(self.frame, style='danger.Solid.TButton', text='recuperer', width=35)
+        
                 
         
         self.pack(fill=BOTH, expand=YES)
@@ -132,6 +135,11 @@ class Notebook_Model_param(Notebook_page):
             self.labels[i].pack(side=LEFT, padx=5, pady=5)
             self.entrys[i].pack(side=LEFT, padx=5, pady=5)
             self.reset[i].pack(side=RIGHT, padx=5, pady=5)
+        
+
+        self.frame.pack(side=BOTTOM)
+        self.recuperer.pack(side=LEFT)
+        self.sauvegarde.pack(side=LEFT)
 
         self.float_vars.append(tk.DoubleVar(value = int(self.float_vars[1].get() // self.float_vars[2].get() + 1)))# N_cycle 8
     
@@ -161,6 +169,10 @@ class Notebook_propeller(Notebook_page):
                             ]
         
         self.default = self.texts_values.copy()
+
+        self.frame = ttk.Frame(self, style='secondary')
+        self.sauvegarde = ttk.Button(self.frame, style='success.Solid.TButton', text='sauvegarder',width=35) 
+        self.recuperer = ttk.Button(self.frame, style='danger.Solid.TButton', text='recuperer', width=35)
 
         for i in range(len(self.texts_values)):
             if i%2!=0:
@@ -201,6 +213,9 @@ class Notebook_propeller(Notebook_page):
             self.entrys[i].pack(side=LEFT, padx=5, pady=5)
             self.reset[i].pack(side=RIGHT, padx=5, pady=5)
 
+        self.frame.pack(side=BOTTOM)
+        self.recuperer.pack(side=LEFT)
+        self.sauvegarde.pack(side=LEFT)
 
         # Position wageningen frame and label
         self.file_frame.pack(side=TOP, pady=5)
@@ -246,9 +261,13 @@ class Notebook_PIDcontroller(Notebook_page):
                             "Constant for PID controller	kp:", 0.003, #kp 33
                             "Constant for PID controller	kd:", 0, #kd  34
                             "Constant for PID controller	ki:", 0.0015, #ki 35
-                            "Original injeciton time (at the beginning of the simulation):",0.01427586 #xr_o 36
+                            "Original injection time (at the beginning of the simulation):",0.01427586 #xr_o 36
                             ]
         
+        self.frame = ttk.Frame(self, style='secondary')
+        self.sauvegarde = ttk.Button(self.frame, style='success.Solid.TButton', text='sauvegarder',width=35) 
+        self.recuperer = ttk.Button(self.frame, style='danger.Solid.TButton', text='recuperer', width=35)
+
         self.default = self.texts_values.copy()
         
         for i in range(len(self.texts_values)):
@@ -290,6 +309,9 @@ class Notebook_PIDcontroller(Notebook_page):
             self.entrys[i].pack(side=LEFT, padx=5, pady=5)
             self.reset[i].pack(side=RIGHT, padx=5, pady=5)
                 
+        self.frame.pack(side=BOTTOM)
+        self.recuperer.pack(side=LEFT)
+        self.sauvegarde.pack(side=LEFT)
 
         # Position steadystate frame and label
         self.file_frame.pack(side=TOP, pady=5)
@@ -372,6 +394,9 @@ class Notebook_0dCycle(Notebook_page):
         
         self.default = self.texts_values.copy()
         
+        self.frame = ttk.Frame(self, style='secondary')
+        self.sauvegarde = ttk.Button(self.frame, style='success.Solid.TButton', text='sauvegarder',width=35) 
+        self.recuperer = ttk.Button(self.frame, style='danger.Solid.TButton', text='recuperer', width=35)
         
         for i in range(len(self.texts_values)):
             if i%2!=0:
@@ -424,6 +449,10 @@ class Notebook_0dCycle(Notebook_page):
             self.Labelframes[i].pack(fill=BOTH, pady=10, padx=20)
 
         self.update_idletasks()
+
+        self.frame.pack(side=BOTTOM)
+        self.recuperer.pack(side=LEFT)
+        self.sauvegarde.pack(side=LEFT)
 
         for i in range(len(self.labels)):
             self.frames[i].pack(side=TOP, anchor='w')
@@ -510,6 +539,9 @@ class Notebook_MVEM_model(Notebook_page):
         
         self.default = self.texts_values.copy()
         
+        self.frame = ttk.Frame(self, style='secondary')
+        self.sauvegarde = ttk.Button(self.frame, style='success.Solid.TButton', text='sauvegarder',width=35) 
+        self.recuperer = ttk.Button(self.frame, style='danger.Solid.TButton', text='recuperer', width=35)
         
         for i in range(len(self.texts_values)):
             if i%2!=0:
@@ -616,6 +648,10 @@ class Notebook_MVEM_model(Notebook_page):
             self.labels[i].pack(side=LEFT, padx=5, pady=5)
             self.entrys[i].pack(side=LEFT, padx=5, pady=5)
             self.reset[i].pack(side=RIGHT, padx=5, pady=5)
+        
+        self.frame.pack()
+        self.recuperer.pack(side=LEFT)
+        self.sauvegarde.pack(side=LEFT)
 
     
 ############################# END MVEM SYSTEM #############################################################
