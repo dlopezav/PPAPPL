@@ -76,8 +76,6 @@ class main_page(ttk.Frame):
             i = 1  # Empieza desde la primera fila
             for page in self.frames_notebook[:-1]:
                 for j in range(len(page.float_vars)-1):
-                    print(len(page.texts))
-                    print(len(page.float_vars))
                     sheet.cell(row=i, column=2, value=page.float_vars[j].get())
                     sheet.cell(row=i, column=1, value=page.texts[j])
                     i+=1
