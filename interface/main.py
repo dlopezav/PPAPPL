@@ -38,7 +38,7 @@ class MainProgram(ttk.Frame):
     
     def show_values(self):
         self.values = self.pages[0].return_all_values()
-        print(self.pages[0].return_file_paths())
+        #print(self.pages[0].return_file_paths())
         print(self.values)
 
 

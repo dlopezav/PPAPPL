@@ -75,11 +75,8 @@ class main_page(ttk.Frame):
             sheet.title = "Datos"
             i = 1  # Empieza desde la primera fila
             for page in self.frames_notebook[:-1]:
-                for j in range(len(page.float_vars)-1):
-                    print(len(page.texts))
-                    print(len(page.float_vars))
+                for j in range(len(page.float_vars)):
                     sheet.cell(row=i, column=2, value=page.float_vars[j].get())
-                    sheet.cell(row=i, column=1, value=page.texts[j])
                     i+=1
             wb.save(nombre_archivo)
             print(f"Données sauvegardées à : {nombre_archivo}")
@@ -93,7 +90,7 @@ class main_page(ttk.Frame):
 
             i = 0
             for page in self.frames_notebook[:-1]:
-                for j in range(len(page.float_vars)-1):
+                for j in range(len(page.float_vars)):
                     value = sheet.cell(row=i+1, column=2).value
                     # Si la valeur est présente dans la cellule
                     if value is not None:
