@@ -75,7 +75,11 @@ class main_page(ttk.Frame):
             sheet.title = "Datos"
             i = 1  # Empieza desde la primera fila
             for page in self.frames_notebook[:-1]:
+<<<<<<< HEAD
                 for j in range(len(page.float_vars)):
+=======
+                for j in range(len(page.float_vars)-1):
+>>>>>>> 03d7199d5e50b3933f13622070e77947f9e79d91
                     sheet.cell(row=i, column=2, value=page.float_vars[j].get())
                     i+=1
             wb.save(nombre_archivo)
