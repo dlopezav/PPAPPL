@@ -1,7 +1,7 @@
 
 
 ###################################### Frame classes to add in main Notebook  #########################################
-
+# Libraries needed
 import tkinter as tk
 from tkinter import ttk, filedialog
 from ttkbootstrap.constants import *
@@ -12,6 +12,8 @@ import openpyxl
 
 
 ######################################## MOTHER CLASS PAGE #######################################################
+# First mother class Notebook_page that represents a general tab, initializing the variables 
+# This page contains the main methods
 
 class Notebook_page(ttk.Frame):
     def __init__(self, tab_notebook):
@@ -42,7 +44,8 @@ class Notebook_page(ttk.Frame):
         self.files = []
 
         self.file_entry = []
-
+    
+    # Method to browse an excel file from the diretory
     def browse_file(self, number):
 
         self.file_path = filedialog.askopenfilename(initialdir="../",
@@ -55,6 +58,7 @@ class Notebook_page(ttk.Frame):
         self.file_entry[number].config(state='readonly')
         self.files.insert(number, self.file_path)
     
+    # Method to choose a diretory to save plots and steady states sheets
     def browse_dir(self, number):
         self.dir_path = filedialog.askdirectory(initialdir="../",
                                                 title="Choose a directory.")
@@ -64,11 +68,7 @@ class Notebook_page(ttk.Frame):
         self.file_entry[number].config(state='readonly')
         self.files.insert(number, self.dir_path)
 
-
-    
-        
-
-
+    # Method to return all the values in the system
     def return_values(self):
 
         if len(self.files)>2:
@@ -76,6 +76,7 @@ class Notebook_page(ttk.Frame):
         else:
             return  [var.get() for var in self.float_vars]
     
+    # Method to reset values to their default values
     def setDefaultVal(self, i):
         self.entrys[i].delete(0, tk.END)
         self.entrys[i].insert(0, self.default[i*2+1])
@@ -83,44 +84,50 @@ class Notebook_page(ttk.Frame):
 
 
 ################################ MODEL PARAMETERS BEGIN ###################################################
+'''
+They following classes are subclasses of the notebook tab
+They have all the same structure
+Some of them has files as an input
 
+'''
 
+# Define a class Notebook_Model_param that inherits from Notebook_page
 class Notebook_Model_param(Notebook_page):
-    def __init__(self,tab_notebook):
+    def __init__(self, tab_notebook):
         super().__init__(tab_notebook)
 
-        self.Labelframes = [ttk.LabelFrame(self, bootstyle='info',text="MODEL")]
+        # Initialize label frames for the notebook
+        self.Labelframes = [ttk.LabelFrame(self, bootstyle='info', text="MODEL")]
 
-        self.texts_values= ["time_t:", 0, #time_t 0 
-                            "total_time:", 0.005 , #total_time 1
-                            "deltat2:",0.005, #delta2 2
-                            "initial value of turbocharger speed [unit?]:", 7522, # NTC_ini 3
-                            "initial pressure ratio compressor:",2.4, # prc 4
-                            "initial pressure ratio turbine:", 3.8, # prt 5
-                            "Initial_speed: ", 12.15, # Vs_ini 6
-                            "model time of the simulation:", 0.035, #total_time 7
+        # Define default values for various parameters
+        self.texts_values = ["time_t:", 0,  # time_t 0 
+                            "total_time:", 0.005 ,  # total_time 1
+                            "deltat2:",0.005,  # delta2 2
+                            "initial value of turbocharger speed [unit?]:", 7522,  # NTC_ini 3
+                            "initial pressure ratio compressor:",2.4,  # prc 4
+                            "initial pressure ratio turbine:", 3.8,  # prt 5
+                            "Initial_speed: ", 12.15,  # Vs_ini 6
+                            "model time of the simulation:", 0.035,  # total_time 7
                             ]
-        
+
+        # Store default values for resetting
         self.default = self.texts_values.copy()
-        
-        
+
+        # Initialize lists for storing labels, entry widgets, and reset buttons
         for i in range(len(self.texts_values)):
-            if i%2!=0:
+            if i % 2 != 0:
                 self.float_vars.append(tk.DoubleVar(value=self.texts_values[i]))
             else:
                 self.texts.append(self.texts_values[i])
 
-
+        # Create frames, labels, entry widgets, and reset buttons
         for count, text in enumerate(self.texts):
-                self.frames.append(ttk.Frame(self.Labelframes[0]))
-                self.labels.append(ttk.Label(self.frames[count], text=text))
-                self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
-                self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count : self.setDefaultVal(count), style='danger-link'))
+            self.frames.append(ttk.Frame(self.Labelframes[0]))
+            self.labels.append(ttk.Label(self.frames[count], text=text))
+            self.entrys.append(ttk.Entry(self.frames[count], textvariable=self.float_vars[count]))
+            self.reset.append(ttk.Button(self.frames[count], text="Reset value", command=lambda count=count: self.setDefaultVal(count), style='danger-link'))
 
-        
-        
-                
-        
+        # Pack widgets and label frames
         self.pack(fill=BOTH, expand=YES)
 
         for i in range(len(self.Labelframes)):
@@ -133,11 +140,10 @@ class Notebook_Model_param(Notebook_page):
             self.labels[i].pack(side=LEFT, padx=5, pady=5)
             self.entrys[i].pack(side=LEFT, padx=5, pady=5)
             self.reset[i].pack(side=RIGHT, padx=5, pady=5)
-        
 
-        
+        # Calculate and append an additional value to float_vars (N_cycle)
+        self.float_vars.append(tk.DoubleVar(value=int(self.float_vars[1].get() // self.float_vars[2].get() + 1)))  # N_cycle 8
 
-        self.float_vars.append(tk.DoubleVar(value = int(self.float_vars[1].get() // self.float_vars[2].get() + 1)))# N_cycle 8
     
 ################ First system propeller ################################
 
