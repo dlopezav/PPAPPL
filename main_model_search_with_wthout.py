@@ -539,18 +539,18 @@ class Diff_equation_shaft:
 #------------------------------------------------- Algorithme -------------------------- #
 # data
 df_me = pd.read_excel(
-    'C:/Users/hbusson/Documents/TNTM/ship data/champs_elysees/BV/second delivery/recapData_BV_comparison.xlsx', sheet_name='ME')
+    '../recapData_BV_comparison.xlsx', sheet_name='ME')
 df_stw = pd.read_excel(
-    'C:/Users/hbusson/Documents/TNTM/ship data/champs_elysees/BV/second delivery/recapData_BV_comparison.xlsx', sheet_name='STW')
+    '../recapData_BV_comparison.xlsx', sheet_name='STW')
 
 
 df_wave = pd.read_excel(
-    'C:/Users/hbusson/Documents/TNTM/ship data/champs_elysees/BV/second delivery/recapData_BV_comparison.xlsx', sheet_name='wave')
+    '../recapData_BV_comparison.xlsx', sheet_name='wave')
 # interpolations
 
 
 df_wind = pd.read_excel(
-    'C:/Users/hbusson/Documents/TNTM/ship data/champs_elysees/BV/second delivery/recapData_BV_comparison.xlsx', sheet_name='wind')
+    '../recapData_BV_comparison.xlsx', sheet_name='wind')
 # interpolations
 
 for i in range(len(df_me)):
@@ -790,9 +790,9 @@ rho_sw = 1026
 # non-dimensional coefficients  calculated from polynomial equations for Wageningen B propeller series
 # integrate this
 k_Q = pd.read_excel(
-    'C:/Users/hbusson/Documents/TNTM/ship data/champs_elysees/BV/first delivery/KQ.xlsx')
+    '../KQ.xlsx')
 k_T = pd.read_excel(
-    'C:/Users/hbusson/Documents/TNTM/ship data/champs_elysees/BV/first delivery/KT.xlsx')
+    '../KT.xlsx')
 
 ########## wave resistance ##############
 

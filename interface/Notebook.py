@@ -785,8 +785,8 @@ class Notebook_excell_sheets(Notebook_page):
     def __init__(self, tab_notebook):
         super().__init__(tab_notebook)
 
-        self.Labelframes = [ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Steady states engines 25,30...70"),
-                            ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Others (excel_files)")]
+        self.Labelframes = [ttk.LabelFrame(self, bootstyle='info',text="Steady states engines 25,30...70"),
+                            ttk.LabelFrame(self, bootstyle='info',text="Others (excel_files)")]
 
         self.texts_values =["Choose folder for steady_states_engines_xx sheets",
                             "Choose directory to save plots:", 
@@ -818,7 +818,6 @@ class Notebook_excell_sheets(Notebook_page):
 
         
         self.pack(fill=BOTH, expand=YES)  
-        self.scrollframe.pack(fill=BOTH,expand=YES)
         self.Labelframes[0].pack(fill=BOTH, pady=10, padx=20)
         self.Labelframes[1].pack(fill=BOTH, pady=10, padx=20)
         self.update_idletasks()
