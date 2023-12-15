@@ -13,19 +13,19 @@ import scipy as sc
 from sklearn.cross_decomposition import PLSRegression
 
 
-df_25 = pd.read_excel(r'C:\Users\hbusson\Desktop\jokin\steady_states_engine_25_2.xlsx')
-df_30 = pd.read_excel(r'C:\Users\hbusson\Desktop\jokin\steady_states_engine_30_2.xlsx')
-df_35 = pd.read_excel(r'C:\Users\hbusson\Desktop\jokin\steady_states_engine_35_2.xlsx')
-df_40 = pd.read_excel(r'C:\Users\hbusson\Desktop\jokin\steady_states_engine_40_2.xlsx')
-df_45 = pd.read_excel(r'C:\Users\hbusson\Desktop\jokin\steady_states_engine_45_2.xlsx')
-df_50 = pd.read_excel(r'C:\Users\hbusson\Desktop\jokin\steady_states_engine_50_2.xlsx')
-df_55 = pd.read_excel(r'C:\Users\hbusson\Desktop\jokin\steady_states_engine_55_2.xlsx')
-df_60 = pd.read_excel(r'C:\Users\hbusson\Desktop\jokin\steady_states_engine_60_2.xlsx')
-df_65 = pd.read_excel(r'C:\Users\hbusson\Desktop\jokin\steady_states_engine_65_2.xlsx')
-df_70 = pd.read_excel(r'C:\Users\hbusson\Desktop\jokin\steady_states_engine_70_2.xlsx')
-df_w =  pd.read_excel(r'C:\Users\hbusson\Desktop\jokin\results.xlsx')
+df_25 = pd.read_excel(r'C:\Users\hugoc\OneDrive\Área de Trabalho\PAPPL\PPAPPL\steady_states_engine_25_2.xlsx')
+df_30 = pd.read_excel(r'C:\Users\hugoc\OneDrive\Área de Trabalho\PAPPL\PPAPPL\steady_states_engine_30_2.xlsx')
+df_35 = pd.read_excel(r'C:\Users\hugoc\OneDrive\Área de Trabalho\PAPPL\PPAPPL\steady_states_engine_35_2.xlsx')
+df_40 = pd.read_excel(r'C:\Users\hugoc\OneDrive\Área de Trabalho\PAPPL\PPAPPL\steady_states_engine_40_2.xlsx')
+df_45 = pd.read_excel(r'C:\Users\hugoc\OneDrive\Área de Trabalho\PAPPL\PPAPPL\steady_states_engine_45_2.xlsx')
+df_50 = pd.read_excel(r'C:\Users\hugoc\OneDrive\Área de Trabalho\PAPPL\PPAPPL\steady_states_engine_50_2.xlsx')
+df_55 = pd.read_excel(r'C:\Users\hugoc\OneDrive\Área de Trabalho\PAPPL\PPAPPL\steady_states_engine_55_2.xlsx')
+df_60 = pd.read_excel(r'C:\Users\hugoc\OneDrive\Área de Trabalho\PAPPL\PPAPPL\steady_states_engine_60_2.xlsx')
+df_65 = pd.read_excel(r'C:\Users\hugoc\OneDrive\Área de Trabalho\PAPPL\PPAPPL\steady_states_engine_65_2.xlsx')
+df_70 = pd.read_excel(r'C:\Users\hugoc\OneDrive\Área de Trabalho\PAPPL\PPAPPL\steady_states_engine_70_2.xlsx')
+df_w =  pd.read_excel(r'C:\Users\hugoc\OneDrive\Área de Trabalho\PAPPL\PPAPPL\results.xlsx')
 df_w = df_w['T_cooling_water']
-df_map = pd.read_excel(r'C:\Users\hbusson\Desktop\jokin\TC_maps2.xlsx')
+df_map = pd.read_excel(r'C:\Users\hugoc\OneDrive\Área de Trabalho\PAPPL\PPAPPL\TC_maps2.xlsx')
 
 
 
