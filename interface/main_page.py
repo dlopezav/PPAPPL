@@ -101,6 +101,12 @@ class main_page(ttk.Frame):
         entry.delete(0, END)
         entry.insert(0, text)
 
+    def executer_program(self):
+        
+        import running as run_program
+        run_program
+
+
     
 
 

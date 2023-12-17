@@ -3,11 +3,6 @@ import tkinter as tk
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 from ttkbootstrap import Style
-from isystem01 import isystem01
-from isystem02 import isystem02
-from isystem03 import isystem03
-from isystem04 import isystem04
-from isystem05 import isystem05
 from main_page import main_page
 
 # Define the main program class
@@ -21,7 +16,7 @@ class MainProgram(ttk.Frame):
         self.db = DowBar(self)
         
         # Create a list of pages depending on the number of systems in the navigation bar
-        self.pages = [main_page(self),isystem01(self),isystem02(self),isystem03(self),isystem04(self),isystem05(self)]
+        self.pages = [main_page(self)]
         self.actual_page = 0
         
         # Show dowbar only if the actual page is not the main page
@@ -87,20 +82,7 @@ class NavBar(ttk.Frame):
         system01 = ttk.Button(self, style='info.Solid.TButton', text='Main',width=15, command = lambda : frameprincipal.show_pages(0))
         system01.pack(side=TOP,padx=10,pady=[250,10])
 
-        system02 = ttk.Button(self, style='info.Solid.TButton', text='PID fuelflow',width=15, command = lambda : frameprincipal.show_pages(1))
-        system02.pack(side=TOP,padx=10,pady=[0,10])
-
-        system03 = ttk.Button(self, style='info.Solid.TButton', text='Propeller',width=15, command = lambda : frameprincipal.show_pages(2))
-        system03.pack(side=TOP,pady=[0,10])
-
-        system04 = ttk.Button(self, style='info.Solid.TButton', text='P. Management',width=15, command = lambda : frameprincipal.show_pages(3))
-        system04.pack(side=TOP,pady=[0,10])
-
-        system05 = ttk.Button(self, style='info.Solid.TButton', text='Engine',width=15, command = lambda : frameprincipal.show_pages(4))
-        system05.pack(side=TOP,pady=[0,10])
-
-        system06 = ttk.Button(self, style='info.Solid.TButton', text='Engine MVEM',width=15, command = lambda : frameprincipal.show_pages(5))
-        system06.pack(side=TOP)
+        
 
 # Entry point of the program
 if __name__ == "__main__":
