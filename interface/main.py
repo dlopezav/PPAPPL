@@ -42,9 +42,8 @@ class MainProgram(ttk.Frame):
         frame.show()
 
     # Show values from the main page
-    def show_values(self):
-        self.values = self.pages[0].return_all_values()
-        print(self.values)
+    def executer(self):
+        self.pages[0].executer_program()
 
 # Define the DowBar class
 class DowBar(ttk.Frame):
@@ -61,7 +60,7 @@ class DowBar(ttk.Frame):
         recuperer = ttk.Button(frame, style='danger.Solid.TButton', text='recuperer', width=35)
         recuperer.pack(side=LEFT)
         
-        executer = ttk.Button(frame, style='primary.Solid.TButton', text='executer', width=35, command=lambda: frameprincipal.show_values())
+        executer = ttk.Button(frame, style='primary.Solid.TButton', text='executer', width=35, command=lambda: frameprincipal.executer())
         executer.pack(side=LEFT)
 
     # Show the DowBar

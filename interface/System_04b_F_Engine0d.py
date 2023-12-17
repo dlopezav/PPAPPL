@@ -660,7 +660,7 @@ def combustion_model(load):
     #%%  Plots - CHOOSE DIRECTORY TO SAVE PLOTS
     
     dpi = 600
-    file_paths = main_page.return_file_paths()
+    file_paths = MainProgram.pages[0].return_file_paths()
     directory_path = file_paths[1]
     directory = rf"{directory_path}"
 
@@ -822,11 +822,14 @@ def combustion_model(load):
 
     # Plotting results over selected cycles for steady state
     xticks = np.arange(0, selected_cycles/NE, 0.5/NE )  
-    directory = r'C:\Users\hbusson\Documents\TNTM\PythonScripts\engine\ayub'
+    file_paths = MainProgram.pages[0].return_file_paths()
+    directory_path = file_paths[8]
+    directory = rf"{directory_path}"
 
 
     # Load data from csv file
-    df = pd.read_csv('C:/Users/hbusson/Documents/TNTM/PythonScripts/engine/ayub/pressure real vs cantera.csv')
+    data_path = file_paths[9]
+    df = pd.read_csv(rf"{data_path}")
    
     Preal = df['P_MCR' + load.replace("%", "")].tolist()
     CAreal = df['CA_MCR' + load.replace("%", "")].tolist()

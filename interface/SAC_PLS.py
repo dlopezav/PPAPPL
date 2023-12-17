@@ -13,7 +13,7 @@ import scipy as sc
 from sklearn.cross_decomposition import PLSRegression
 from main import *
 
-file_paths = main_page.return_file_paths()
+file_paths = MainProgram.pages[0].return_file_paths()
 folder_path = file_paths[0]
 # Caminho da pasta
 folder_path = file_paths[0]

@@ -190,7 +190,7 @@ class Enginederivatives:
     def Training_PLS(self, rpm_res, pr_c_res):
        
        
-       file_paths = main_page.return_file_paths()
+       file_paths = MainProgram.pages[0].return_file_paths()
        r_path = file_paths[2]
        TC_path = file_paths[3]
        df_w =  pd.read_excel(rf"{r_path}")

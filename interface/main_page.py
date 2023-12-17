@@ -36,7 +36,7 @@ class main_page(ttk.Frame):
         self.frame = ttk.Frame(self, style='secondary')
         self.sauvegarde = ttk.Button(self.frame, command=lambda: self.sauvegarder_dans_excel(), style='success.Solid.TButton', text='sauvegarder', width=35) 
         self.recuperer = ttk.Button(self.frame, command=lambda: self.charger_depuis_excel(), style='danger.Solid.TButton', text='recuperer', width=35)
-        self.executer = ttk.Button(self.frame, style='primary.Solid.TButton', text='executer', width=35, command=lambda: frameprincipal.show_values())
+        self.executer = ttk.Button(self.frame, style='primary.Solid.TButton', text='executer', width=35, command=lambda: frameprincipal.executer())
         
         # Pack the buttons
         self.frame.pack(side=BOTTOM)

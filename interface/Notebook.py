@@ -67,6 +67,17 @@ class Notebook_page(ttk.Frame):
         self.file_entry[number].insert(0, self.dir_path)
         self.file_entry[number].config(state='readonly')
         self.files.insert(number, self.dir_path)
+    
+    def browse_csv(self, number):
+        self.file_path = filedialog.askopenfilename(initialdir="../",
+                                                    filetypes=[("CSV files", "*.csv")],
+                                                    title="Choose a file.")
+
+        self.file_entry[number].config(state='normal')
+        self.file_entry[number].delete(0, tk.END)
+        self.file_entry[number].insert(0, self.file_path)
+        self.file_entry[number].config(state='readonly')
+        self.files.insert(number, self.file_path)
 
     # Method to return all the values in the system
     def return_values(self):
@@ -785,8 +796,8 @@ class Notebook_excell_sheets(Notebook_page):
     def __init__(self, tab_notebook):
         super().__init__(tab_notebook)
 
-        self.Labelframes = [ttk.LabelFrame(self, bootstyle='info',text="Steady states engines 25,30...70"),
-                            ttk.LabelFrame(self, bootstyle='info',text="Others (excel_files)")]
+        self.Labelframes = [ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Steady states engines 25,30...70"),
+                            ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Others (excel_files)")]
 
         self.texts_values =["Choose folder for steady_states_engines_xx sheets",
                             "Choose directory to save plots:", 
@@ -798,6 +809,9 @@ class Notebook_excell_sheets(Notebook_page):
                             "KT:", 
                             "KQ:", 
                             "steady_states:",
+                            "Directory for plotting results over selected cycles for steady state",
+                            "Pressure real vs cantera",
+                            "trial_DF25"
                             ]
         
         
@@ -810,14 +824,28 @@ class Notebook_excell_sheets(Notebook_page):
                 self.file_entry.append(ttk.Entry(self.frames[count], state='readonly'))
                 self.buttons.append(ttk.Button(self.frames[count], text="Browse", command=lambda c=count: self.browse_dir(c), style='info'))
             else:
-                self.frames.append(ttk.Frame(self.Labelframes[1]))
-                self.labels.append(ttk.Label(self.frames[count], text=text))
-                self.file_entry.append(ttk.Entry(self.frames[count], state='readonly'))
-                self.buttons.append(ttk.Button(self.frames[count], text="Browse", command=lambda c=count: self.browse_file(c), style='info'))
+                if count<9:
+                    self.frames.append(ttk.Frame(self.Labelframes[1]))
+                    self.labels.append(ttk.Label(self.frames[count], text=text))
+                    self.file_entry.append(ttk.Entry(self.frames[count], state='readonly'))
+                    self.buttons.append(ttk.Button(self.frames[count], text="Browse", command=lambda c=count: self.browse_file(c), style='info'))
+                else:
+                    if count==9:
+                        self.frames.append(ttk.Frame(self.Labelframes[1]))
+                        self.labels.append(ttk.Label(self.frames[count], text=text))
+                        self.file_entry.append(ttk.Entry(self.frames[count], state='readonly'))
+                        self.buttons.append(ttk.Button(self.frames[count], text="Browse", command=lambda c=count: self.browse_dir(c), style='info'))
+                    else:
+                        self.frames.append(ttk.Frame(self.Labelframes[1]))
+                        self.labels.append(ttk.Label(self.frames[count], text=text))
+                        self.file_entry.append(ttk.Entry(self.frames[count], state='readonly'))
+                        self.buttons.append(ttk.Button(self.frames[count], text="Browse", command=lambda c=count: self.browse_csv(c), style='info'))
+
                 
 
         
         self.pack(fill=BOTH, expand=YES)  
+        self.scrollframe.pack(fill=BOTH, expand=YES) 
         self.Labelframes[0].pack(fill=BOTH, pady=10, padx=20)
         self.Labelframes[1].pack(fill=BOTH, pady=10, padx=20)
         self.update_idletasks()

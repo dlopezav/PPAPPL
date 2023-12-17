@@ -161,7 +161,7 @@ class Propeller:
         self.delta_kt =0
         self.delta_kq =0
         
-        file_path = main_page.return_file_paths()
+        file_path = MainProgram.pages[0].return_file_paths()
         w_r_path = file_path[4]
         df2 = pd.read_excel(rf"{w_r_path}")
 
@@ -194,7 +194,7 @@ class Propeller:
     
     def reading_file(self):
 
-        file_path = main_page.return_file_paths()
+        file_path = MainProgram.pages[0].return_file_paths()
         KT_path = file_path[5]
         KQ_path = file_path[6]
         steadystates_path = file_path[6]

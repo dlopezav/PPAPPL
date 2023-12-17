@@ -8,6 +8,7 @@ Created on Thu Aug 25 10:05:48 2022
 from cosapp.base import System, Port
 import numpy as np
 from System_04b_F_Engine0d import *
+from main import *
 
 
 import math
@@ -277,9 +278,9 @@ class InCylinder(System):
   
          load = "25%"
          combustion_model(load)
-
-
-         df = pd.read_csv('C:/Users/hbusson/Documents/TNTM/PythonScripts/engine/ayub/trial_DF25.csv')
+         file_paths = MainProgram.pages[0].return_file_paths()
+         trial_path = file_paths[10]
+         df = pd.read_csv(rf"{trial_path}")
          
          
          print(len(df))
