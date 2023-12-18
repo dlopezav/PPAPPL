@@ -4,6 +4,7 @@ import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 from ttkbootstrap import Style
 from main_page import main_page
+from main_wthout import main_wthout
 
 # Define the main program class
 class MainProgram(ttk.Frame):
@@ -16,7 +17,7 @@ class MainProgram(ttk.Frame):
         self.db = DowBar(self)
         
         # Create a list of pages depending on the number of systems in the navigation bar
-        self.pages = [main_page(self)]
+        self.pages = [main_page(self), main_wthout(self)]
         self.actual_page = 0
         
         # Show dowbar only if the actual page is not the main page
@@ -53,16 +54,6 @@ class DowBar(ttk.Frame):
         frame = ttk.Frame(self, style='secondary')
         frame.pack()
 
-        # Create buttons for saving, retrieving, and executing
-        sauvegarde = ttk.Button(frame, style='success.Solid.TButton', text='sauvegarder',width=35) 
-        sauvegarde.pack(side=LEFT)
-        
-        recuperer = ttk.Button(frame, style='danger.Solid.TButton', text='recuperer', width=35)
-        recuperer.pack(side=LEFT)
-        
-        executer = ttk.Button(frame, style='primary.Solid.TButton', text='executer', width=35, command=lambda: frameprincipal.executer())
-        executer.pack(side=LEFT)
-
     # Show the DowBar
     def show(self):
         self.pack(side=BOTTOM, fill=BOTH)
@@ -80,6 +71,9 @@ class NavBar(ttk.Frame):
         # Create buttons for navigating to different pages
         system01 = ttk.Button(self, style='info.Solid.TButton', text='Main',width=15, command = lambda : frameprincipal.show_pages(0))
         system01.pack(side=TOP,padx=10,pady=[250,10])
+
+        system02 = ttk.Button(self, style='info.Solid.TButton', text='Main wthout',width=15, command = lambda : frameprincipal.show_pages(1))
+        system02.pack(side=TOP,padx=10,pady=[0,10])
 
         
 
