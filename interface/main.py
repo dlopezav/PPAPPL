@@ -77,18 +77,16 @@ class NavBar(ttk.Frame):
 
         
 
-# Entry point of the program
-if __name__ == "__main__":
-    # Create the main application window
-    app = ttk.Window("PAPPL", "cyborg", resizable=(False, False), size=[1080,720], iconphoto='icon.png')
-    app.place_window_center()
+# Create the main application window
+app = ttk.Window("PAPPL", "cyborg", resizable=(False, False), size=[1080,720], iconphoto='icon.png')
+app.place_window_center()
 
-    # Create a style for the application
-    style = Style()
-    style.configure('main.TLabel', font=('Arial', 40))
+# Create a style for the application
+style = Style()
+style.configure('main.TLabel', font=('Arial', 40))
 
-    # Initialize the main program
-    MainProgram(app)
+# Initialize the main program
+main_program_instance = MainProgram(app)
 
-    # Start the application event loop
-    app.mainloop()
+# Start the application event loop
+app.mainloop()

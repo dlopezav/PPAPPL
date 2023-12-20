@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 import math as m
 import scipy as sc
 from sklearn.cross_decomposition import PLSRegression
-from main import *
+from main import main_program_instance as MainProgram
 
 file_paths = MainProgram.pages[0].return_file_paths()
 folder_path = file_paths[0]
@@ -36,8 +36,8 @@ df_w = df_w['T_cooling_water']
 df_map = pd.read_excel(f"{folder_path}\\TC_maps2.xlsx")
 
 
-
-df = [df_25, df_30, df_35, df_40,df_45,df_50, df_55, df_60, df_65, df_70]
+# Criando a lista df
+df = [dfs[f"df_{value}"] for value in engine_values]
 
 def objective(x, k_c_1, k_c_2, k_c_0):
  return k_c_1 * x + k_c_2 * x**2 + k_c_0

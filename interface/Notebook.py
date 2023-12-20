@@ -824,13 +824,13 @@ class Notebook_excell_sheets(Notebook_page):
                 self.file_entry.append(ttk.Entry(self.frames[count], state='readonly'))
                 self.buttons.append(ttk.Button(self.frames[count], text="Browse", command=lambda c=count: self.browse_dir(c), style='info'))
             else:
-                if count<9:
+                if count<8:
                     self.frames.append(ttk.Frame(self.Labelframes[1]))
                     self.labels.append(ttk.Label(self.frames[count], text=text))
                     self.file_entry.append(ttk.Entry(self.frames[count], state='readonly'))
                     self.buttons.append(ttk.Button(self.frames[count], text="Browse", command=lambda c=count: self.browse_file(c), style='info'))
                 else:
-                    if count==9:
+                    if count==8:
                         self.frames.append(ttk.Frame(self.Labelframes[1]))
                         self.labels.append(ttk.Label(self.frames[count], text=text))
                         self.file_entry.append(ttk.Entry(self.frames[count], state='readonly'))

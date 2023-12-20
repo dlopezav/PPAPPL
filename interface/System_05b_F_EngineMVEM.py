@@ -8,7 +8,7 @@ from math import *
 import math
 import pandas as pd
 from SAC_PLS import *
-from main import *
+from main import main_program_instance as MainProgram
 
 #TODO
 #calcul heat exchange in exhaust receiver

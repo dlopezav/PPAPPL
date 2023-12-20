@@ -15,7 +15,7 @@ from math import *
 import math
 import pandas as pd
 from scipy.interpolate import CubicSpline
-from main import *
+from main import main_program_instance as MainProgram
 
 class Propeller:
     """This is the propeller model.

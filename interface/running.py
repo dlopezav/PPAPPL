@@ -20,7 +20,8 @@ from System_04a_IO_Engine0d import *
 from System_05a_IO_EngineMVEM import *
 from Init_system import *
 from math import *
-from main import MainProgram as MP
+from main import main_program_instance as MP
+
 
 class Current:
     

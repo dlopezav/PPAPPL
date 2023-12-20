@@ -8,7 +8,7 @@ Created on Thu Aug 25 10:05:48 2022
 from cosapp.base import System, Port
 import numpy as np
 from System_04b_F_Engine0d import *
-from main import *
+from main import main_program_instance as MainProgram
 
 
 import math

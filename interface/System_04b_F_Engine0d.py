@@ -21,7 +21,7 @@ import os
 import math
 import openpyxl
 from datetime import datetime
-from main import *
+from main import main_program_instance as MainProgram
 
 #%% 
 
