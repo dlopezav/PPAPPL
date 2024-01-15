@@ -16,6 +16,9 @@ class main_page(ttk.Frame):
         titre_text = "MAIN"
         self.titre = ttk.Label(self, text=titre_text, style='main.TLabel')
 
+        #parameter to run the program
+        self.begin = FALSE
+
         # Initialize values, texts, and notebook frames
         self.values = []
         self.texts = ["Model Param","PID propeller","PID controller","od Cycle","MVEM model","Param energy","Excell imports"]
@@ -78,6 +81,13 @@ class main_page(ttk.Frame):
                 for j in range(len(page.float_vars)):
                     sheet.cell(row=i, column=2, value=page.float_vars[j].get())
                     i += 1
+
+            i = 1  
+            for page in self.frames_notebook:
+                for j in range(len(page.files)):
+                    sheet.cell(row=i, column=3, value=page.files[j])
+                    i += 1
+
             wb.save(nombre_archivo)
             print(f"Data saved to: {nombre_archivo}")
 
@@ -88,13 +98,25 @@ class main_page(ttk.Frame):
             wb = openpyxl.load_workbook(nombre_archivo)
             sheet = wb.active
             i = 0
+
             for page in self.frames_notebook[:-1]:
                 for j in range(len(page.float_vars)):
                     value = sheet.cell(row=i+1, column=2).value
                     if value is not None:
                         page.float_vars[j].set(value)
                     i += 1
+
+            i = 1
+            for page in self.frames_notebook:
+                for j in range(len(page.files)):
+                    value = sheet.cell(row=i, column=3).value
+                    if value is not None:
+                        page.files[j] = value
+                    i += 1
+                page.charge_paths()
+
             print(f"Data loaded from: {nombre_archivo}")
+
 
     # Set text for an entry
     def set_text(self, entry, text):
@@ -102,9 +124,10 @@ class main_page(ttk.Frame):
         entry.insert(0, text)
 
     def executer_program(self):
+        self.return_all_values()
+        self.begin = TRUE
         
-        import running as run_program
-        run_program
+    
 
 
     

@@ -41,13 +41,12 @@ class Notebook_page(ttk.Frame):
 
         self.texts_values= []
 
-        self.files = []
+        self.files = [""]
 
         self.file_entry = []
     
     # Method to browse an excel file from the diretory
     def browse_file(self, number):
-
         self.file_path = filedialog.askopenfilename(initialdir="../",
                                                     filetypes=[("Excel files", ".xlsx .xls")],
                                                     title="Choose a file.")
@@ -56,7 +55,7 @@ class Notebook_page(ttk.Frame):
         self.file_entry[number].delete(0, tk.END)
         self.file_entry[number].insert(0, self.file_path)
         self.file_entry[number].config(state='readonly')
-        self.files.insert(number, self.file_path)
+        self.files[number] =  self.file_path
     
     # Method to choose a diretory to save plots and steady states sheets
     def browse_dir(self, number):
@@ -66,7 +65,7 @@ class Notebook_page(ttk.Frame):
         self.file_entry[number].delete(0, tk.END)
         self.file_entry[number].insert(0, self.dir_path)
         self.file_entry[number].config(state='readonly')
-        self.files.insert(number, self.dir_path)
+        self.files[number] =  self.dir_path
     
     def browse_csv(self, number):
         self.file_path = filedialog.askopenfilename(initialdir="../",
@@ -77,12 +76,12 @@ class Notebook_page(ttk.Frame):
         self.file_entry[number].delete(0, tk.END)
         self.file_entry[number].insert(0, self.file_path)
         self.file_entry[number].config(state='readonly')
-        self.files.insert(number, self.file_path)
+        self.files[number] =  self.file_path
 
     # Method to return all the values in the system
     def return_values(self):
 
-        if len(self.files)>2:
+        if len(self.files)>1:
             return self.files
         else:
             return  [var.get() for var in self.float_vars]
@@ -91,6 +90,15 @@ class Notebook_page(ttk.Frame):
     def setDefaultVal(self, i):
         self.entrys[i].delete(0, tk.END)
         self.entrys[i].insert(0, self.default[i*2+1])
+
+    def charge_paths(self):
+        if len(self.file_entry) != 0:
+            for number in range(len(self.files)):
+                self.file_entry[number].config(state='normal')
+                self.file_entry[number].delete(0, tk.END)
+                self.file_entry[number].insert(0, self.files[number])
+                self.file_entry[number].config(state='readonly')
+        
 
 
 
@@ -305,6 +313,7 @@ class Notebook_PIDcontroller(Notebook_page):
         self.Labelframes[0].pack(fill=BOTH, pady=10, padx=20)
         self.Labelframes[1].pack(fill=BOTH, pady=10, padx=20)
         self.update_idletasks()
+    
 
         for i in range(len(self.labels)):
             self.frames[i].pack(side=TOP, anchor='w')
@@ -449,6 +458,7 @@ class Notebook_0dCycle(Notebook_page):
             self.Labelframes[i].pack(fill=BOTH, pady=10, padx=20)
 
         self.update_idletasks()
+        
 
 
         for i in range(len(self.labels)):
@@ -637,6 +647,7 @@ class Notebook_MVEM_model(Notebook_page):
             self.Labelframes[i].pack(fill=BOTH, pady=10, padx=20)
 
         self.update_idletasks()
+      
 
         for i in range(len(self.labels)):
             self.frames[i].pack(side=TOP, anchor='w')
@@ -781,6 +792,7 @@ class Notebook_Param_energy(Notebook_page):
             self.Labelframes[i].pack(fill=BOTH, pady=10, padx=20)
 
         self.update_idletasks()
+      
 
         for i in range(len(self.labels)):
             self.frames[i].pack(side=TOP, anchor='w')
@@ -795,6 +807,7 @@ class Notebook_Param_energy(Notebook_page):
 class Notebook_excell_sheets(Notebook_page):
     def __init__(self, tab_notebook):
         super().__init__(tab_notebook)
+
 
         self.Labelframes = [ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Steady states engines 25,30...70"),
                             ttk.LabelFrame(self.scrollframe, bootstyle='info',text="Others (excel_files)")]
@@ -814,6 +827,7 @@ class Notebook_excell_sheets(Notebook_page):
                             "trial_DF25"
                             ]
         
+        self.files = self.files*len(self.texts_values)
         
         self.buttons = []
         
@@ -849,6 +863,7 @@ class Notebook_excell_sheets(Notebook_page):
         self.Labelframes[0].pack(fill=BOTH, pady=10, padx=20)
         self.Labelframes[1].pack(fill=BOTH, pady=10, padx=20)
         self.update_idletasks()
+        
 
         for i in range(len(self.labels)):
             self.frames[i].pack(side=TOP, anchor='w')

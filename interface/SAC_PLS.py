@@ -15,9 +15,6 @@ from main import main_program_instance as MainProgram
 
 file_paths = MainProgram.pages[0].return_file_paths()
 folder_path = file_paths[0]
-# Caminho da pasta
-folder_path = file_paths[0]
-
 # Lista de valores numéricos
 engine_values = [25, 30, 35, 40, 45, 50, 55, 60, 65, 70]
 

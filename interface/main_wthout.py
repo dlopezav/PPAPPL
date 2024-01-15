@@ -62,7 +62,7 @@ class main_wthout(ttk.Frame):
 
     def executer_program(self):
         
-        import running as run_program
+        import interface.interface as run_program
         run_program
 
 

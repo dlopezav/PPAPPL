@@ -12,7 +12,6 @@ Created on Fri Aug 26 14:18:35 2022
 from cosapp.base import System, Port
 import numpy as np
 from System_02b_F_Propeller import *
-import scipy.interpolate
 from scipy.interpolate import CubicSpline
 
 
@@ -89,7 +88,7 @@ class PortOutputProp(Port):
 class Propeller_sys(System):
     """The propeller model implementation as a cosapp System.
 
-    The attributes are initiated with cosapp’s setup method.
+    The attributes are initiated with cosapp's setup method.
 
     Attributes
     ----------
